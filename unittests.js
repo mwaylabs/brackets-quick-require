@@ -4,12 +4,9 @@
 define(function(require, exports, module) {
     'use strict';
 
-
-    //var EditorManager = brackets.getModule("editor/EditorManager");
     var SpecRunnerUtils = brackets.getModule("spec/SpecRunnerUtils"),
         FileUtils = brackets.getModule("file/FileUtils");
 
-    // Get Todo modules.
     var InlineRequireEditor = require('inlinerequireeditor'),
         npmbridge = require('npmbridge'),
         quickrequire = require('quickrequire'),
@@ -33,11 +30,6 @@ define(function(require, exports, module) {
             inline,
             editor,
             testInlineRequireEditor;
-
-
-
-
-
 
         beforeEach(function() {
 
@@ -136,9 +128,6 @@ define(function(require, exports, module) {
 
                 expect(InlineRequireEditor.prototype._start).toBe(null);
 
-
-
-
                 t1 = null;
             });
 
@@ -189,8 +178,6 @@ define(function(require, exports, module) {
 
             it('onClosed', function() {
 
-
-
                 var t1 = new InlineRequireEditor({
                     start: {
                         line: 0,
@@ -225,10 +212,7 @@ define(function(require, exports, module) {
                 testInlineRequireEditor.hostEditor.document.setText(testFileContent);
                 expect(testInlineRequireEditor._checkValue()).toEqual("test");
 
-
-
             });
-
 
         });
 
