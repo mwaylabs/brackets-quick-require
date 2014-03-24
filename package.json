@@ -1,0 +1,16 @@
+{
+  "name": "quickrequire",
+  "title": "Quickrequire Inline Editor",
+  "description": "Include and download node-modules",
+  "homepage": "TODO",
+  "version": "0.1.0",
+  "author": "Marco Hanowski, Stefan Buck, Timo Weiß",
+  "license": "MIT",
+  "engines": {
+    "brackets": ">=0.37.0"
+  },
+  "dependencies": {
+    "backbone": "1.1.0",
+    "npm": "^1.4.6"
+  }
+}

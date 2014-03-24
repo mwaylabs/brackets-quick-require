@@ -1,0 +1,40 @@
+<div tabindex="-1" style="height:200px" class="require-editor  table-striped">
+
+    <table>
+        <tr>
+            <th>
+                <span><%= Strings.INLINE_MODULE_TITLE %></span>
+            </th>
+            <th>
+                <span><%= Strings.INLINE_MODULE_DESCRIPTION %></span>
+            </th>
+        </tr>
+
+        <% if(matches.aaData.length === 0){ %>
+        <tr>
+            <td class="no-match">
+                <span><%= Strings.INLINE_MODULE_NO_RESULTS %></span>
+            </td>
+        </tr>
+
+        <% } %>
+
+        <% _.each(matches.aaData ,function(item, key){ %>
+            <tr>
+                <td class="ext-info">
+                    <div class="name-wrapper"><span class="ext-name"><%= item[0] %></span></div>
+                </td>
+                <td class="ext-desc">
+                    <div class="description-wrapper"><span><%= item[1] %></span></div>
+                </td>
+                <td class="ext-action">
+                    <button data-uuid="{{attributes.uuid}}" class="btn btn-mini update install-module-btn" data-extension-id="brackets-nodejs">
+                        <%= Strings.INLINE_MODULE_INSTALL %>
+                    </button>
+                </td>
+
+            </tr>
+        <% }) %>
+    </table>
+
+</div>

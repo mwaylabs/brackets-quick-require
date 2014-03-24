@@ -1,0 +1,113 @@
+.require-editor {
+    font-size: 12px;
+    height: 190px;
+    padding: 5px 0 0 46px;
+    overflow-y: scroll;
+    font-family: 'SourceSansPro', Helvetica, Arial, "Meiryo UI", "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+}
+.require-editor:focus {
+    outline: none;
+}
+
+.require-editor .ext-action {
+    font-size: 12px;
+    padding-right: 15px;
+    text-align: right;
+    vertical-align: middle;
+    width: 80px;
+    cursor: pointer;
+}
+
+.require-editor .ext-desc {
+    width: auto;    
+    font-weight: normal;
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    -o-user-select: text;
+    user-select: text;
+    cursor: text;
+}
+
+.require-editor td {
+    height: 4em;
+    word-break: break-all;
+    line-height: 18px;
+    color: #454545;
+}
+
+.require-editor.table-striped tbody tr:hover td {
+    background: #567EFF;
+    color: white;
+}
+
+.require-editor table {
+    width: 100%;
+}
+
+.require-editor .ext-name {
+    display: block;
+    font-size: 14px;
+    font-weight: normal;
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    -o-user-select: text;
+    user-select: text;
+    cursor: text;
+}
+
+.require-editor .ext-info {
+    width: auto;
+    padding: 0 20px;
+}
+
+.require-editor th {
+    text-align: left;
+    line-height: 3em;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.require-editor.table-striped tbody tr td.no-match{
+    background: #e6e9e9;
+}
+
+.inline-widget .close {
+    top: 16px;
+}
+
+#twipsyTooltip {
+    width: 24px;
+    height: 24px;
+}
+.tooltip-innerQuickRequire {
+    padding: 8px;
+    text-decoration: none;
+    background-color: #ffffff;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.24);
+    color: #454545;
+    max-width: 220px;
+    text-align: left;
+}
+.error {
+    color: #e9322d;
+}
+
+.success {
+    color: #4bb621;
+}
+
+
+.npm-install-dialog .spinner {
+    float:left;
+}
+.npm-install-dialog .status {
+    float:left;
+    padding: 9px 15px;
+}

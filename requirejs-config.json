@@ -1,0 +1,16 @@
+{
+    "paths": {
+        "underscore": "node_modules/backbone/node_modules/underscore/underscore",
+        "backbone": "node_modules/backbone/backbone"
+    },
+
+    "shim": {
+        "underscore": {
+            "exports": "_"
+        },
+        "backbone": {
+            "deps": ["underscore"],
+            "exports": "Backbone"
+        }
+    }
+}
