@@ -1,4 +1,5 @@
-/* global define, describe, it, expect, jasmine */
+// Copyright (c) 2014 M-Way Solutions GmbH
+// https://github.com/mwaylabs/brackets-quick-require/blob/master/LICENCE
 
 define(function(require, exports, module) {
     'use strict';

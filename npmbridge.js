@@ -1,12 +1,13 @@
+// Copyright (c) 2014 M-Way Solutions GmbH
+// https://github.com/mwaylabs/brackets-quick-require/blob/master/LICENCE
+
 define(function(require, exports, module) {
     "use strict";
-
-    var Strings = require("strings");
 
     var NodeConnection = brackets.getModule("utils/NodeConnection");
     var ExtensionUtils = brackets.getModule("utils/ExtensionUtils");
     var ProjectManager = brackets.getModule("project/ProjectManager");
-    //var Strings = brackets.getModule("nls/root/strings");
+
 
     var nodeConnection = null;
 
@@ -47,8 +48,6 @@ define(function(require, exports, module) {
 
         //run the node-function
         run(nodeFunc);
-
-
 
     }
 

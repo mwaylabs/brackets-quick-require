@@ -175,6 +175,7 @@ define({
     SETUP_COMPLETE: 'Setup successfully completed',
 
     NPM_INSTALL_MODULE: 'Installing npm module',
+    NPM_INSTALL: 'install npm',
 
     ERROR_STUDIO_APPLICATION_409: 'A project already exist with the given name. Please rename the project.',
 

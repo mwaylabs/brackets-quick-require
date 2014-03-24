@@ -1,3 +1,6 @@
+// Copyright (c) 2014 M-Way Solutions GmbH
+// https://github.com/mwaylabs/brackets-quick-require/blob/master/LICENCE
+
 define(function(require, exports, module) {
     "use strict";
     var EditorManager = brackets.getModule("editor/EditorManager"),
@@ -5,6 +8,7 @@ define(function(require, exports, module) {
         InlineRequireEditor = require('inlinerequireeditor');
     var _ = brackets.getModule("thirdparty/lodash");
 
+    var BracketsStrings = brackets.getModule("strings");
     var Strings = require("strings");
     var Dialogs = brackets.getModule("widgets/Dialogs");
     var npmInstallDialog = require("text!html/npm-install-dialog.html");
@@ -42,7 +46,6 @@ define(function(require, exports, module) {
             var currentLinePos = hostedit.getCursorPos().line,
                 currentLineHandle = hostedit._codeMirror.getLineHandle(currentLinePos).text;
 
-
             var requireRegex = /(require\(['"])([a-zA-Z\w0-9_-\s]*)(["'\);]*)/;
 
             var match = requireRegex.exec(currentLineHandle);
@@ -65,14 +68,17 @@ define(function(require, exports, module) {
          * register event 'quickrequire-npm-installed'
          */
         $(document).on('quickrequire-npm-installed', _setNewModuleLine);
-
-
-
     }
 
+
+    /**
+     * open npm-install-dialog
+     *
+     */
     function openNpmInstallDialog() {
         var templateVars = {
-            Strings: Strings
+            Strings: Strings,
+            BracketsStrings: BracketsStrings
         };
         var template = _.template(npmInstallDialog, templateVars);
         Dialogs.showModalDialogUsingTemplate(template);
@@ -130,7 +136,6 @@ define(function(require, exports, module) {
     function inlineRequireProvider(hostEditor, pos) {
         var context = prepareEditorForProvider(hostEditor, pos),
             result;
-
 
         if (!context) {
             return null;

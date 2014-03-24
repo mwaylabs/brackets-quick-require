@@ -1,3 +1,6 @@
+// Copyright (c) 2014 M-Way Solutions GmbH
+// https://github.com/mwaylabs/brackets-quick-require/blob/master/LICENCE
+
 define(function(require, exports, module) {
     "use strict";
 
@@ -134,11 +137,9 @@ define(function(require, exports, module) {
                     // Close the shown "install-dialog"
                     Dialogs.cancelModalDialogIfOpen('npm-install-dialog');
                     var currenInlineEditor = EditorManager.getActiveEditor().getInlineWidgets();
-                    debugger;
 
                     //
                     _.each(currenInlineEditor, function(inlineEditor) {
-                        debugger;
                         // Close if it's a require-editor
                         if (inlineEditor.hasOwnProperty('requireEditor')) {
                             inlineEditor.close();

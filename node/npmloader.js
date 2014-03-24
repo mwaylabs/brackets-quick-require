@@ -1,6 +1,8 @@
+// Copyright (c) 2014 M-Way Solutions GmbH
+// https://github.com/mwaylabs/brackets-quick-require/blob/master/LICENCE
+
 (function() {
     "use strict";
-
     var npm = require('npm');
 
     /**
@@ -18,7 +20,6 @@
                 cb(false, data);
             });
         });
-
     }
 
     /**
