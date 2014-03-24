@@ -1,11 +1,22 @@
 {
     "name": "quick-require",
     "title": "Quickrequire Inline Editor",
-    "description": "Include and download node-modules",
+    "description": "Include and download node-modules. The quick-require inline-editor allows you to install node-module via npm. Right out of the document where you need it.",
     "homepage": "http://www.mwaysolutions.com/",
     "version": "0.1.0",
     "author": "Marco Hanowski, Stefan Buck, Timo Weiß",
     "license": "MIT",
+    "keywords": [
+        "npm",
+        "require",
+        "npm install",
+        "inline-editor"
+    ],
+    "categories": "utility",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mwaylabs/brackets-quick-require.git"
+    },
     "engines": {
         "brackets": ">=0.37.0"
     },
