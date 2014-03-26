@@ -1,25 +1,42 @@
 <div tabindex="-1" style="height:200px" class="require-editor  table-striped">
 
-    <table>
-        <tr>
+    <table >
+        <thead>
+        <tr >
             <th>
-                <span><%= Strings.INLINE_MODULE_TITLE %></span>
+               <span><%= Strings.INLINE_MODULE_TITLE %></span>
             </th>
             <th>
-                <span><%= Strings.INLINE_MODULE_DESCRIPTION %></span>
+               <span><%= Strings.INLINE_MODULE_DESCRIPTION %></span>
+            </th>
+            <th>
+               <div class="fixedSavePackage"> <input type="checkbox" id="save-package" name="save-package"> <label for="save-package"><%= Strings.SAVE_IN_PACKAGE_JSON %></label></div>
             </th>
         </tr>
-
-        <% if(matches.aaData.length === 0){ %>
-        <tr>
-            <td class="no-match">
-                <span><%= Strings.INLINE_MODULE_NO_RESULTS %></span>
-            </td>
-        </tr>
+        </thead>
+        <tbody>
+        <% if(!matches.initial && matches.aaData.length === 0){ %>
+            <tr>
+                <td class="no-match">
+                    <span><%= Strings.INLINE_MODULE_NO_RESULTS %></span>
+                </td>
+            </tr>
 
         <% } %>
 
-        <% _.each(matches.aaData ,function(item, key){ %>
+        <% if(matches.initial){ %>
+            <tr>
+                <td>
+                    <span><%= Strings.SEARCH_FOR_NPM_MODULES %></span>
+                </td>
+                <td>
+                    <span><%= Strings.INSERT_MODULE_NAME %></span>
+                </td>
+            </tr>
+
+        <% } %>
+
+        <% _.each(matches.aaData, function(item, key){ %>
             <tr>
                 <td class="ext-info">
                     <div class="name-wrapper"><span class="ext-name"><%= item[0] %></span></div>
@@ -35,6 +52,7 @@
 
             </tr>
         <% }) %>
+        </tbody>
     </table>
 
 </div>

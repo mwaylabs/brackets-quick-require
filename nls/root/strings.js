@@ -37,14 +37,17 @@ define({
     INLINE_MODULE_TITLE: 'Title',
     INLINE_MODULE_DESCRIPTION: 'Description',
     INLINE_MODULE_INSTALL: 'Install',
+    INSERT_MODULE_NAME: 'please insert npm module-name',
     INLINE_MODULE_NO_RESULTS: 'Sorry, no matches found.',
     NOTIFICATON_INSTALL_NPMMODULE_TITLE: "successfully installed",
     NOTIFICATON_INSTALL_NPMMODULE_END: "successfully installed",
     NOTIFICATON_ERROR_MESSAGE_PAST: "Something went wrong",
     ERROR_INVALID_NPM_MODULE: "invalid npm module",
+    SEARCH_FOR_NPM_MODULES: 'search for npm-modules',
 
     NPM_INSTALL_MODULE: 'Installing npm module',
     NPM_INSTALL: 'install npm',
+    SAVE_IN_PACKAGE_JSON: 'save in package.json',
 
     ERROR_STUDIO_APPLICATION_409: 'A project already exist with the given name. Please rename the project.',
 

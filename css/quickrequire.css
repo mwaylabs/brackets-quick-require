@@ -111,3 +111,21 @@
     float:left;
     padding: 9px 15px;
 }
+.invisible {
+    display: none;
+}
+
+.fixedSavePackage {
+    position:absolute;
+    top:0;
+    right:14px;
+    background: #dfe2e2;
+    border-bottom: 1px solid #c4caca;
+    border-left: 1px solid #c4caca;
+    padding: 10px;
+    line-height: normal;
+    font-weight: normal;
+}
+.fixedSavePackage label {
+    display: inline;
+}

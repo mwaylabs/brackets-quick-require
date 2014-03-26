@@ -10,8 +10,12 @@
      * @param {options} contains path and moduleName
      */
     function npmInstallModules(options, cb) {
+        var config = {};
+        if (options.save) {
+            config.save = true;
+        }
 
-        npm.load({}, function() {
+        npm.load(config, function() {
             npm.commands.install(options.projectPath, [options.moduleName], function(er, data) {
                 if (er) {
                     cb(er);

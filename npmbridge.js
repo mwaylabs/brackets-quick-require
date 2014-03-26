@@ -17,7 +17,7 @@ define(function(require, exports, module) {
      * @param {String} moduleName module to install
      * @param {function} cb callback
      */
-    function callNpmInstall(moduleName, cb) {
+    function callNpmInstall(moduleName, savePackage, cb) {
         if (!moduleName || !cb || typeof cb !== 'function')
             throw new Error('invalid params');
 
@@ -31,7 +31,8 @@ define(function(require, exports, module) {
             var projectRootPath = ProjectManager.getProjectRoot().fullPath;
             var promise = nodeConnection.domains.simple.npmInstall({
                 projectPath: projectRootPath,
-                moduleName: moduleName
+                moduleName: moduleName,
+                save: savePackage
             });
             promise.fail(function(err) {
                 if (typeof cb === 'function') {

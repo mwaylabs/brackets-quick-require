@@ -7,11 +7,22 @@ define(function(require, exports, module) {
     var Strings = require("strings");
     var requireEditorTemplate = require("text!html/requireeditor.html");
     var moduleList = require("assets/package");
+
+
+    var moduleNameList = require("text!assets/tempTest.json");
+    var moduleVersionFile = require("text!assets/test/version.json");
+
+
     var requireNpmbridge = require("npmbridge");
     var quickrequire = require("quickrequire");
     var _ = brackets.getModule("thirdparty/lodash");
     var EditorManager = brackets.getModule("editor/EditorManager");
     var Dialogs = brackets.getModule("widgets/Dialogs");
+    var test = require('loadModuleList');
+
+    var parsedModuleList = null;
+
+    //var moduleList = [];
 
     /**
      * Creates a new RequireEditor,
@@ -22,11 +33,13 @@ define(function(require, exports, module) {
      * @param {String} moduleName
      */
     function RequireEditor($parent, moduleName) {
+
+        parsedModuleList = JSON.parse(moduleNameList);
+
         if (!$parent)
             throw new Error('$parent is not defined');
         if (moduleName || moduleName === '') {
             var matches = this.filterModules(moduleName);
-
             var templateVars = {
                 Strings: Strings,
                 matches: matches
@@ -58,7 +71,11 @@ define(function(require, exports, module) {
             Strings: Strings,
             matches: matches
         };
-
+        console.log(matches);
+        if (matches.aaData.length > 500) {
+            matches.aaData.splice(500, matches.aaData.length - 1);
+        }
+        console.log(matches);
         var template = _.template(requireEditorTemplate, templateVars);
         var $element = $(template);
         $('.require-editor').replaceWith($element);
@@ -71,9 +88,20 @@ define(function(require, exports, module) {
      */
     RequireEditor.prototype.filterModules = function(module) {
         var array = {};
-        var matches = _.filter(moduleList.aaData, function(element) {
+        if (module.length <= 0) {
+            array.aaData = [];
+            array.initial = true;
+            return array;
+        }
+        var matches = _.filter(parsedModuleList['rows'], function(element) {
             var a = element[0].search(module);
+
             if (a >= 0) {
+                if (element[1].length > 53) {
+                    element[1] = element[1].slice(0, 50);
+                    element[1] = element[1] + '...';
+                }
+
                 return element;
             }
         });
@@ -98,6 +126,7 @@ define(function(require, exports, module) {
             //get the name of the selected module-name
             var selectedModulName = $(this.parentElement.parentElement).find('.ext-name').html();
 
+            var savePackage = $('.require-editor table').find('#save-package').is(':checked');
             /**
              * give user feedback whether module-installation
              * was successfull or it has failed
@@ -136,6 +165,7 @@ define(function(require, exports, module) {
                 } else {
                     // Close the shown "install-dialog"
                     Dialogs.cancelModalDialogIfOpen('npm-install-dialog');
+
                     var currenInlineEditor = EditorManager.getActiveEditor().getInlineWidgets();
 
                     //
@@ -168,14 +198,14 @@ define(function(require, exports, module) {
 
                     //Trigger the success-event
                     $(document).trigger('quickrequire-npm-installed', [data, selectedModulName, selectedModulName]);
-
+                    $(document).undelegate('.install-module-btn', 'click');
                 }
 
 
             };
 
             //run npm install with the selectedModulName
-            requireNpmbridge.callNpmInstall(selectedModulName, notifyUserCallback);
+            requireNpmbridge.callNpmInstall(selectedModulName, savePackage, notifyUserCallback);
 
         });
 

@@ -143,6 +143,7 @@ define(function(require, exports, module) {
             result = new $.Deferred();
 
             var quickRequireEditor = new InlineRequireEditor(context);
+
             quickRequireEditor.load(hostEditor);
 
             result.resolve(quickRequireEditor);
