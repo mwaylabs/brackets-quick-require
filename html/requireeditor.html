@@ -3,8 +3,11 @@
     <table >
         <thead>
         <tr >
-            <th>
+            <th style="width:23%">
                <span><%= Strings.INLINE_MODULE_TITLE %></span>
+            </th>
+            <th>
+               <span>Downloads</span>
             </th>
             <th>
                <span><%= Strings.INLINE_MODULE_DESCRIPTION %></span>
@@ -40,6 +43,9 @@
             <tr>
                 <td class="ext-info">
                     <div class="name-wrapper"><span class="ext-name"><%= item[0] %></span></div>
+                </td>
+                <td class="dlc">
+                    <% if(item[2]) { %><i class="fa fa-cloud-download"></i> <%= item[2] %><%  } %>
                 </td>
                 <td class="ext-desc">
                     <div class="description-wrapper"><span><%= item[1] %></span></div>

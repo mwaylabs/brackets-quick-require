@@ -177,39 +177,32 @@ define(function(require, exports, module) {
 
                     });
                     //currenInlineEditor[0].close();
+                    if (data) {
+                        var installedModuleName = data[0][0];
+                        templateContent = '<div class="tooltip-arrow"></div><div class="tooltip-innerQuickRequire">' + installedModuleName + ' ' + Strings.NOTIFICATON_INSTALL_NPMMODULE_END + '</div>';
 
-                    var installedModuleName = data[0][0];
-                    templateContent = '<div class="tooltip-arrow"></div><div class="tooltip-innerQuickRequire">' + installedModuleName + ' ' + Strings.NOTIFICATON_INSTALL_NPMMODULE_END + '</div>';
+                        //configure twipsy
+                        options = {
+                            placement: "left",
+                            trigger: "manual",
+                            autoHideDelay: 5000,
+                            title: function() {
+                                return Strings.NOTIFICATON_INSTALL_NPMMODULE_TITLE;
+                            },
+                            template: templateContent
+                        };
+                        //Show twipsy with successmessage
+                        $tempTwipsyDiv.twipsy(options).twipsy("show");
 
-                    //configure twipsy
-                    options = {
-                        placement: "left",
-                        trigger: "manual",
-                        autoHideDelay: 5000,
-                        title: function() {
-                            return Strings.NOTIFICATON_INSTALL_NPMMODULE_TITLE;
-                        },
-
-                        template: templateContent
-
-                    };
-                    //Show twipsy with successmessage
-                    $tempTwipsyDiv.twipsy(options).twipsy("show");
-
-                    //Trigger the success-event
-                    $(document).trigger('quickrequire-npm-installed', [data, selectedModulName, selectedModulName]);
+                        //Trigger the success-event
+                        $(document).trigger('quickrequire-npm-installed', [data, selectedModulName, selectedModulName]);
+                    }
                     $(document).undelegate('.install-module-btn', 'click');
                 }
-
-
             };
-
             //run npm install with the selectedModulName
             requireNpmbridge.callNpmInstall(selectedModulName, savePackage, notifyUserCallback);
-
         });
-
     };
-
     exports.RequireEditor = RequireEditor;
 });

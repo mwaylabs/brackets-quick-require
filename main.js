@@ -11,6 +11,7 @@ define(function(require, exports, module) {
     var QuickRequire = require('quickrequire');
 
     ExtensionUtils.loadStyleSheet(module, "css/bootstrap-responsive.css");
+    ExtensionUtils.loadStyleSheet(module, "node_modules/font-awesome/css/font-awesome.css");
 
     var Plugin = {
         initialize: function() {
