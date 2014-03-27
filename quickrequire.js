@@ -23,6 +23,8 @@ define(function(require, exports, module) {
         // register new inlineRequireProvider
         EditorManager.registerInlineEditProvider(inlineRequireProvider);
         _registerEvents();
+
+
     }
 
     /**
@@ -68,6 +70,8 @@ define(function(require, exports, module) {
          * register event 'quickrequire-npm-installed'
          */
         $(document).on('quickrequire-npm-installed', _setNewModuleLine);
+
+
     }
 
 

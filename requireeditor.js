@@ -49,11 +49,29 @@ define(function(require, exports, module) {
             this.$element = $(template);
             this.parentElement.append(this.$element);
             this.setListeners();
+            this.setTooltipListener();
+
+
+
         } else {
             throw new Error('moduleName is not defined');
         }
-
     }
+
+    RequireEditor.prototype.setTooltipListener = function() {
+        setTimeout(function() {
+            // Configure twipsy
+            var options = {
+                placement: "above",
+                trigger: "hover",
+                title: function() {
+                    return Strings.SAVE_IN_PACKAGE_JSON_TOOLTIP;
+                }
+            };
+            // Show the twipsy with the explanation
+            $('#flagTooltip').twipsy(options);
+        }, 1000);
+    };
 
     RequireEditor.prototype.getRootElement = function() {
         return this.$element;
@@ -79,6 +97,7 @@ define(function(require, exports, module) {
         var template = _.template(requireEditorTemplate, templateVars);
         var $element = $(template);
         $('.require-editor').replaceWith($element);
+        this.setTooltipListener();
     };
 
     /**
@@ -117,7 +136,6 @@ define(function(require, exports, module) {
      * register click-listener on '.install-module-btn'
      */
     RequireEditor.prototype.setListeners = function() {
-
         $(document).delegate('.install-module-btn', 'click', function(event) {
 
             // open the waiting dialog

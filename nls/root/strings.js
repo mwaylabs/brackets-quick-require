@@ -47,7 +47,8 @@ define({
 
     NPM_INSTALL_MODULE: 'Installing npm module',
     NPM_INSTALL: 'install npm',
-    SAVE_IN_PACKAGE_JSON: 'save in package.json',
+    SAVE_IN_PACKAGE_JSON: ' (-S/--save)',
+    SAVE_IN_PACKAGE_JSON_TOOLTIP: 'enable checkbox to set the "save-in-package" flag',
 
     ERROR_STUDIO_APPLICATION_409: 'A project already exist with the given name. Please rename the project.',
 

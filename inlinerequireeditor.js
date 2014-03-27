@@ -8,6 +8,8 @@ define(function(require, exports, module) {
     var RequireEditor = require("requireeditor").RequireEditor;
     var InlineWidget = brackets.getModule("editor/InlineWidget").InlineWidget;
 
+    var Strings = require("strings");
+
     function InlineRequireEditor(context) {
         if (context && context.hasOwnProperty('start') && context.hasOwnProperty('cursorLine')) {
 
