@@ -37,7 +37,7 @@ define({
     INLINE_MODULE_TITLE: 'Title',
     INLINE_MODULE_DESCRIPTION: 'Description',
     INLINE_MODULE_INSTALL: 'Install',
-    INSERT_MODULE_NAME: 'please insert npm module-name',
+    INSERT_MODULE_NAME: 'please insert a npm module-name',
     INLINE_MODULE_NO_RESULTS: 'Sorry, no matches found.',
     NOTIFICATON_INSTALL_NPMMODULE_TITLE: "successfully installed",
     NOTIFICATON_INSTALL_NPMMODULE_END: "successfully installed",
