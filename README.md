@@ -24,4 +24,4 @@ To run the extension, simply type `require("` in any javascript file and hit `CM
 
 ##Licence
 
-brackets-quick-require is licenced under the MIT licence.
+brackets-quick-require is licenced under the [MIT licence](http://en.wikipedia.org/wiki/MIT_licence).
