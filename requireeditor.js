@@ -14,7 +14,6 @@ define(function(require, exports, module) {
     var _ = brackets.getModule("thirdparty/lodash");
     var EditorManager = brackets.getModule("editor/EditorManager");
     var Dialogs = brackets.getModule("widgets/Dialogs");
-    var test = require('loadModuleList');
 
     var parsedModuleList = null;
 
