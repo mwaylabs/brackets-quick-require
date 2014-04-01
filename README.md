@@ -20,4 +20,8 @@ There are in fact three different ways to add the quick-require extension to you
 	3. Reload Brackets.
 
 ##Usage
-To run the extension, simply type `require("` in any javascript file and hit `CMD + E`. 
+To run the extension, simply type `require("` in any javascript file and hit `CMD + E`.
+
+##Licence
+
+brackets-quick-require is licenced under the MIT licence.

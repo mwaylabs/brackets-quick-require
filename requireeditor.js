@@ -6,12 +6,8 @@ define(function(require, exports, module) {
 
     var Strings = require("strings");
     var requireEditorTemplate = require("text!html/requireeditor.html");
-    var moduleList = require("assets/package");
-
 
     var moduleNameList = require("text!assets/tempTest.json");
-    var moduleVersionFile = require("text!assets/test/version.json");
-
 
     var requireNpmbridge = require("npmbridge");
     var quickrequire = require("quickrequire");
@@ -89,11 +85,9 @@ define(function(require, exports, module) {
             Strings: Strings,
             matches: matches
         };
-        console.log(matches);
         if (matches.aaData.length > 500) {
             matches.aaData.splice(500, matches.aaData.length - 1);
         }
-        console.log(matches);
         var template = _.template(requireEditorTemplate, templateVars);
         var $element = $(template);
         $('.require-editor').replaceWith($element);

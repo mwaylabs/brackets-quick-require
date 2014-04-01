@@ -16,12 +16,12 @@ define(function(require, exports, module) {
     var Plugin = {
         initialize: function() {
             QuickRequire.initQuickRequire();
+
         }
     };
 
     AppInit.appReady(function() {
         Plugin.initialize();
-        brackets.app.showDeveloperTools();
     });
 
 
