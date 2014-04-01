@@ -1,0 +1,5 @@
+{
+    "version": "5.1.1",
+    "updateURL": "http://localhost/testZip.zip",
+    "port": 8000
+}
