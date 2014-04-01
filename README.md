@@ -1,10 +1,12 @@
 brackets-quick-require
 ======================
+brackets-quick-require is a extension to Adobe Brackets that allows you to search and install node-modules out of the npm-registry - without even leaving the file where you want to use it.
+The extension also allows you to set the 'save in package'-flag (`-S/--save`)
 
 ##Installation
 There are in fact three different ways to add the quick-require extension to your Brackets-Editor.
 
-- The Extension is available in the extensions registry. So you are able to download it through the Brackets Extension Manager. There you will always find the latest stable release.
+- The Extension will be soon available in the Brackets registry. So you will be able to download it through the Brackets Extension Manager. There you will always find the latest stable release.
 
 - Install via URL:
  	1. Open the the Extension Manager from the File menu.
@@ -18,4 +20,4 @@ There are in fact three different ways to add the quick-require extension to you
 	3. Reload Brackets.
 
 ##Usage
-To run the extension, simply type `require("` in any javascript file and hit `CMD + E`  te
+To run the extension, simply type `require("` in any javascript file and hit `CMD + E`. 
