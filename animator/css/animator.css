@@ -1,0 +1,18 @@
+#anim-icon{
+    width: 0%;
+    height: 0%;
+    position: relative;
+    transition: all 0.4s linear;
+}
+
+#icon-wrapper{
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    z-index: 2000;
+}
+
+.enlarge{
+    height: 100%!important;
+    width: 100%!important;
+}
