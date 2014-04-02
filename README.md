@@ -22,6 +22,8 @@ There are in fact three different ways to add the quick-require extension to you
 ##Usage
 To run the extension, simply type `require("` in any javascript file and hit `CMD + E`.
 
+![a](howtouse.gif)
+
 ##Licence
 
 The MIT License (MIT)
