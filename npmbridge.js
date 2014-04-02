@@ -17,6 +17,42 @@ define(function(require, exports, module) {
      * @param {String} moduleName module to install
      * @param {function} cb callback
      */
+    function callUpdate(config, cb) {
+        if (!config || !cb || typeof cb !== 'function')
+            throw new Error('invalid params');
+
+        /**
+         * gets the current project path where
+         * node_module should be installed
+         *
+         * returns promise
+         */
+        var nodeFunc = function() {
+            var promise = nodeConnection.domains.simple.update(config);
+            promise.fail(function(err) {
+                if (typeof cb === 'function') {
+                    cb(err);
+                }
+            });
+            promise.done(function(data) {
+                if (typeof cb === 'function') {
+                    cb(null, data);
+                }
+            });
+            return promise;
+        };
+
+        //run the node-function
+        run(nodeFunc);
+
+    }
+
+    /**
+     * setup before calling the nodefunction
+     *
+     * @param {String} moduleName module to install
+     * @param {function} cb callback
+     */
     function callNpmInstall(moduleName, savePackage, cb) {
         if (!moduleName || !cb || typeof cb !== 'function')
             throw new Error('invalid params');
@@ -108,5 +144,6 @@ define(function(require, exports, module) {
     }
 
     exports.callNpmInstall = callNpmInstall;
+    exports.callUpdate = callUpdate;
 
 });

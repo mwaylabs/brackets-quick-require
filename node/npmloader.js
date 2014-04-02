@@ -26,6 +26,11 @@
         });
     }
 
+    function update(options, cb){
+        console.log(options);
+        cb(false, options);
+    }
+
     /**
      * Initializes the test domain with several test commands.
      * @param {DomainManager} DomainManager The DomainManager for the server
@@ -44,6 +49,14 @@
             true,
             "", [], []
         );
+        DomainManager.registerCommand(
+            "simple",
+            "update",
+            update,
+            true,
+            "", [], []
+        );
+
     }
 
     exports.init = init;
