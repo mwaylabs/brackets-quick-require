@@ -1,5 +1,5 @@
 {
  "savedate": "2014-04-01T15:52:51.317Z",
- "updateURL": "http://localhost/testZip.zip",   
- "version": 2
+ "updateURL": "https://raw.githubusercontent.com/mwaylabs/brackets-quick-require/master/update-source/moduleList.zip",   
+ "version": 3
 }
