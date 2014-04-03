@@ -16,7 +16,7 @@ define(function(require, exports, module) {
     var Dialogs = brackets.getModule("widgets/Dialogs");
 
     var parsedModuleList = null;
-
+    var searchInEntireWord = false;
     //var moduleList = [];
 
     /**
@@ -43,6 +43,7 @@ define(function(require, exports, module) {
             this.parentElement = $parent;
             this.$element = $(template);
             this.parentElement.append(this.$element);
+
             this.setListeners();
             this.setTooltipListener();
 
@@ -54,6 +55,8 @@ define(function(require, exports, module) {
     }
 
     RequireEditor.prototype.setTooltipListener = function() {
+
+
         setTimeout(function() {
             // Configure twipsy
             var options = {
@@ -78,6 +81,9 @@ define(function(require, exports, module) {
      * @param {String} moduleName
      */
     RequireEditor.prototype.updateList = function(moduleName) {
+        searchInEntireWord = $('.require-editor table').find('#search-algo').is(':checked');
+        var that = this;
+
         var matches = this.filterModules(moduleName);
 
         var templateVars = {
@@ -90,6 +96,14 @@ define(function(require, exports, module) {
         var template = _.template(requireEditorTemplate, templateVars);
         var $element = $(template);
         $('.require-editor').replaceWith($element);
+        var $searchAlgoCheckbox = $('.require-editor table').find('#search-algo');
+        $searchAlgoCheckbox.on('change', function(){
+                that.updateList(moduleName);
+        });
+
+        if(searchInEntireWord) {
+            $searchAlgoCheckbox.prop('checked', true);
+        }
         this.setTooltipListener();
     };
 
@@ -106,12 +120,12 @@ define(function(require, exports, module) {
             return array;
         }
 
-        var searchInEntireWord = false;
+
 
         var matches = [];
         if(!searchInEntireWord) {
             _.each(parsedModuleList['rows'], function(element) {
-                var index = element[0].indexOf(module)
+                var index = element[0].indexOf(module);
                 if(index === 0) {
                     if (element[1].length > 53) {
                         element[1] = element[1].slice(0, 50);
@@ -124,7 +138,9 @@ define(function(require, exports, module) {
             matches = _.filter(parsedModuleList['rows'], function(element) {
                 var a = element[0].search(module);
 
-                if (a >= 0) {
+                /*var b = element[1].search(module);*/
+
+                if (a >= 0 /*|| b >= 0*/) {
                     if (element[1].length > 53) {
                         element[1] = element[1].slice(0, 50);
                         element[1] = element[1] + '...';

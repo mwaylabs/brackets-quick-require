@@ -12,8 +12,8 @@
             <th>
                <span><%= Strings.INLINE_MODULE_DESCRIPTION %></span>
             </th>
-            <th id="flagTooltip">
-               <div class="fixedSavePackage"> <input type="checkbox" id="save-package" name="save-package"> <label for="save-package"><%= Strings.SAVE_IN_PACKAGE_JSON %></label></div>
+            <th>
+               <div class="fixedSavePackage"><input type="checkbox" id="search-algo" name="search-algo"> <label for="search-algo"><%= Strings.SEARCH_IN_WHOLE_WORD %></label> <div id="flagTooltip"><input type="checkbox" id="save-package" name="save-package"> <label for="save-package"><%= Strings.SAVE_IN_PACKAGE_JSON %></label></div></div>
             </th>
         </tr>
         </thead>
@@ -33,8 +33,11 @@
                     <span><%= Strings.SEARCH_FOR_NPM_MODULES %></span>
                 </td>
                 <td>
-                    <span><%= Strings.INSERT_MODULE_NAME %></span>
+
                 </td>
+                <td>
+                <span><%= Strings.INSERT_MODULE_NAME %></span>
+            </td>
             </tr>
 
         <% } %>
