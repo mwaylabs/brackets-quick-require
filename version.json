@@ -1,5 +1,5 @@
 {
-    "updateURL": "http://mwaydev.nerds.mway.io/require-plugin/moduleList.zip",
-    "version": 2,
+    "updateURL": "http://mwaylabs.github.io/brackets-quick-require/moduleList.zip",
+    "version": 3,
     "port": 80
 }
