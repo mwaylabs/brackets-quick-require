@@ -28,7 +28,7 @@ define(function(require, exports, module) {
          * returns promise
          */
         var nodeFunc = function() {
-            var promise = nodeConnection.domains.simple.update(config);
+            var promise = nodeConnection.domains.simple.updateManagerUpdate(config);
             promise.fail(function(err) {
                 if (typeof cb === 'function') {
                     cb(err);

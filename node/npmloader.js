@@ -4,6 +4,7 @@
 (function() {
     "use strict";
     var npm = require('npm');
+    var updateManager = require('../node_modules/update-manager/update-manager');
 
     /**
      * Runs the 'npm install'-command with the given path and moduleName
@@ -26,9 +27,19 @@
         });
     }
 
-    function update(options, cb){
-        console.log(options);
-        cb(false, options);
+    function updateManagerUpdate(options, cb){
+
+        console.log('update', options, cb);
+
+        options.error = function(e){
+            cb(e);
+        };
+
+        options.success = function(data){
+            cb(false, data);
+        };
+
+        updateManager.update(options);
     }
 
     /**
@@ -51,8 +62,8 @@
         );
         DomainManager.registerCommand(
             "simple",
-            "update",
-            update,
+            "updateManagerUpdate",
+            updateManagerUpdate,
             true,
             "", [], []
         );
