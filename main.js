@@ -29,7 +29,7 @@ define(function (require, exports, module) {
     AppInit.appReady(function () {
         Plugin.initialize();
         requireNpmbridge.callUpdate({
-                "updateVersionURL": 'http://mwaydev.nerds.mway.io/require-plugin/version.json',
+                "updateVersionURL": 'http://mwaylabs.github.io/brackets-quick-require/version.json',
                 "extractPath": moduleDirectoryPath + '/assets/',
                 "port": 80,
                 "log": true
