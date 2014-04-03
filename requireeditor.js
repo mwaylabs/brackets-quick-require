@@ -7,7 +7,7 @@ define(function(require, exports, module) {
     var Strings = require("strings");
     var requireEditorTemplate = require("text!html/requireeditor.html");
 
-    var moduleNameList = require("text!assets/tempTest.json");
+    var moduleNameList = require("text!assets/moduleList.json");
 
     var requireNpmbridge = require("npmbridge");
     var quickrequire = require("quickrequire");
@@ -105,21 +105,40 @@ define(function(require, exports, module) {
             array.initial = true;
             return array;
         }
-        var matches = _.filter(parsedModuleList['rows'], function(element) {
-            var a = element[0].search(module);
 
-            if (a >= 0) {
-                if (element[1].length > 53) {
-                    element[1] = element[1].slice(0, 50);
-                    element[1] = element[1] + '...';
+        var searchInEntireWord = false;
+
+        var matches = [];
+        if(!searchInEntireWord) {
+            _.each(parsedModuleList['rows'], function(element) {
+                var index = element[0].indexOf(module)
+                if(index === 0) {
+                    if (element[1].length > 53) {
+                        element[1] = element[1].slice(0, 50);
+                        element[1] = element[1] + '...';
+                    }
+                    matches.push(element);
                 }
+            });
+        } else {
+            matches = _.filter(parsedModuleList['rows'], function(element) {
+                var a = element[0].search(module);
 
-                return element;
-            }
-        });
+                if (a >= 0) {
+                    if (element[1].length > 53) {
+                        element[1] = element[1].slice(0, 50);
+                        element[1] = element[1] + '...';
+                    }
+
+                    return element;
+                }
+            });
+        }
+
         array = {
             aaData: matches
         };
+
         return array;
     };
 
