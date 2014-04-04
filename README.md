@@ -11,7 +11,7 @@ There are in fact three different ways to add the quick-require extension to you
 - Install via URL:
  	1. Open the the Extension Manager from the File menu.
  	2. Click on Install form URL...
- 	3. Copy and paste following URL in the text field: `https://github.com/mwaylabs/brackets-quick-require`
+ 	3. Copy and paste following URL in the text field: `http://mwaylabs.github.io/brackets-quick-require/quick-require.zip`
  	4. Click Install
  
 - Install from file system
