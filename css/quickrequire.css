@@ -115,7 +115,7 @@
     display: none;
 }
 
-.fixedSavePackage {
+.fixedControls {
     position:absolute;
     top:0;
     right:14px;
@@ -126,6 +126,12 @@
     line-height: normal;
     font-weight: normal;
 }
-.fixedSavePackage label {
+.fixedControls label {
     display: inline;
+}
+.fixedControls div {
+    display: inline-block;
+}
+.fixedControls .changeSearchAlgo {
+    margin-right: 5px;
 }
