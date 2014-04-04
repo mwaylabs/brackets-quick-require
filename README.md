@@ -15,14 +15,14 @@ There are in fact three different ways to add the quick-require extension to you
  	4. Click Install
  
 - Install from file system
-	1. Download this extension using the ZIP button and unzip it.
-	2. Copy it in Brackets' `/extensions/user` folder by selecting Show Extension Folder in the Help menu.
+	1. [Download](http://mwaylabs.github.io/brackets-quick-require/quick-require.zip) this extension as a zip file.
+	2. Unzip it in Brackets' `/extensions/user` folder by selecting Show Extension Folder in the Help menu.
 	3. Reload Brackets.
 
 ##Usage
 To run the extension, simply type `require("` in any javascript file and hit `CMD + E`.
 
-![a](howtouse.gif)
+![a](http://mwaylabs.github.io/brackets-quick-require/howtouse.gif)
 
 ##Licence
 
