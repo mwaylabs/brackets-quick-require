@@ -13,13 +13,15 @@ define(function(require, exports, module) {
     var Dialogs = brackets.getModule("widgets/Dialogs");
     var npmInstallDialog = require("text!html/npm-install-dialog.html");
 
-
+    var isOpen = false;
+    var inlineEditors = [];
     ExtensionUtils.loadStyleSheet(module, "css/quickrequire.css");
 
     /**
      * initialise
      */
     function initQuickRequire() {
+        debugger;
         // register new inlineRequireProvider
         EditorManager.registerInlineEditProvider(inlineRequireProvider);
         _registerEvents();
@@ -80,6 +82,7 @@ define(function(require, exports, module) {
      *
      */
     function openNpmInstallDialog() {
+        console.log('openDialog');
         var templateVars = {
             Strings: Strings,
             BracketsStrings: BracketsStrings
@@ -138,6 +141,30 @@ define(function(require, exports, module) {
      * @param {object} pos current cursor position
      */
     function inlineRequireProvider(hostEditor, pos) {
+        if(isOpen && inlineEditors.length) {
+            _.each(inlineEditors, function(edit_Pos) {
+                 if(edit_Pos.pos.line == pos.line) {
+                     edit_Pos.quickRequireEditor.close();
+                     var iToRemove = inlineEditors.indexOf(edit_Pos);
+                     inlineEditors.splice(iToRemove, 1);
+                     if(inlineEditors.length == 0) {
+                         isOpen = false;
+                     }
+                     return;
+                 } else {
+                     appendInlineWidget(hostEditor, pos);
+                 }
+            });
+            if(inlineEditors.length == 0) {
+                isOpen = false;
+            }
+        }
+        else {
+          return  appendInlineWidget(hostEditor, pos);
+        }
+    }
+
+    function appendInlineWidget(hostEditor, pos) {
         var context = prepareEditorForProvider(hostEditor, pos),
             result;
 
@@ -145,18 +172,20 @@ define(function(require, exports, module) {
             return null;
         } else {
             result = new $.Deferred();
-
             var quickRequireEditor = new InlineRequireEditor(context);
-
             quickRequireEditor.load(hostEditor);
 
             result.resolve(quickRequireEditor);
-
-
+            inlineEditors.push({
+                quickRequireEditor: quickRequireEditor,
+                pos: pos
+            });
+            isOpen = true;
             return result.promise();
         }
     }
     exports.openNpmInstallDialog = openNpmInstallDialog;
     exports.initQuickRequire = initQuickRequire;
+    exports.inlineEditors = inlineEditors;
 
 });

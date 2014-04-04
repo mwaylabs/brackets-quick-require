@@ -7,6 +7,7 @@ define(function(require, exports, module) {
     // Load modules
     var RequireEditor = require("requireeditor").RequireEditor;
     var InlineWidget = brackets.getModule("editor/InlineWidget").InlineWidget;
+    var quickrequire = require("quickrequire");
 
     var Strings = require("strings");
 
@@ -46,6 +47,7 @@ define(function(require, exports, module) {
      *
      */
     InlineRequireEditor.prototype.onAdded = function() {
+
         InlineRequireEditor.prototype.parentClass.onAdded.apply(this, arguments);
 
         var doc = this.hostEditor.document;
@@ -53,6 +55,8 @@ define(function(require, exports, module) {
         $(doc).on("change", this._handleHostDocumentChange);
 
         this.hostEditor.setInlineWidgetHeight(this, this.requireEditor.getRootElement().outerHeight(), true);
+
+        console.log('onAdded');
     };
 
     /**
@@ -60,11 +64,17 @@ define(function(require, exports, module) {
      * release text content out of the memory [releaseRef()]
      */
     InlineRequireEditor.prototype.onClosed = function() {
+
+
         InlineRequireEditor.prototype.parentClass.onClosed.apply(this, arguments);
 
         var doc = this.hostEditor.document;
         $(doc).off("change", this._handleHostDocumentChange);
+        $(document).undelegate('.install-module-btn', 'click');
         doc.releaseRef();
+        quickrequire.inlineEditors.shift(0, 1);
+        console.log('onClosed');
+
     };
 
     /**

@@ -168,7 +168,6 @@ define(function(require, exports, module) {
 
             // open the waiting dialog
             quickrequire.openNpmInstallDialog();
-
             //get the name of the selected module-name
             var selectedModulName = $(this.parentElement.parentElement).find('.ext-name').html();
 
