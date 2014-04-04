@@ -6,7 +6,7 @@ The extension also allows you to set the 'save in package'-flag (`-S/--save`)
 ##Installation
 There are in fact three different ways to add the quick-require extension to your Brackets-Editor.
 
-- The Extension will be soon available in the Brackets registry. So you will be able to download it through the Brackets Extension Manager. There you will always find the latest stable release.
+- The Extension will be soon available in the Brackets Extension Registry. So you will be able to download it through the Brackets Extension Manager. There you will always find the latest stable release.
 
 - Install via URL:
  	1. Open the the Extension Manager from the File menu.
