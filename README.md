@@ -16,7 +16,7 @@ There are in fact three different ways to add the quick-require extension to you
  
 - Install from file system
 	1. [Download](http://mwaylabs.github.io/brackets-quick-require/quick-require.zip) this extension as a zip file.
-	2. Unzip it in Brackets' `/extensions/user` folder by selecting Show Extension Folder in the Help menu.
+	2. Unzip it in Brackets' `/extensions/user` folder. You can get there by selecting Show Extension Folder in the Help menu.
 	3. Reload Brackets.
 
 ##Usage
