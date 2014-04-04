@@ -12,16 +12,19 @@ define(function(require, exports, module) {
     var Strings = require("strings");
     var Dialogs = brackets.getModule("widgets/Dialogs");
     var npmInstallDialog = require("text!html/npm-install-dialog.html");
+    var StatusBar = brackets.getModule("widgets/StatusBar");
 
     var isOpen = false;
     var inlineEditors = [];
     ExtensionUtils.loadStyleSheet(module, "css/quickrequire.css");
 
+    var INDICATOR_ID = 'install-npm-module';
+    var INDICATOR_ID2 = 'install-npm-module-text';
+
     /**
      * initialise
      */
     function initQuickRequire() {
-        debugger;
         // register new inlineRequireProvider
         EditorManager.registerInlineEditProvider(inlineRequireProvider);
         _registerEvents();
@@ -89,6 +92,20 @@ define(function(require, exports, module) {
         };
         var template = _.template(npmInstallDialog, templateVars);
         Dialogs.showModalDialogUsingTemplate(template);
+        showProcessInStatusbar();
+        $(document).find('.primary').on('click', function() {
+            var hostedit = EditorManager.getActiveEditor().getInlineWidgets();
+            hostedit[0].close();
+        });
+    }
+
+    function showProcessInStatusbar() {
+        var statusIconHtml = Mustache.render("<div id=\"npm-install-status\">&nbsp;</div> ", Strings);
+        var statusIconHtmlText = Mustache.render("<div id=\"npm-install-status-text\">installing node-module</div> ", Strings);
+        StatusBar.addIndicator(INDICATOR_ID, $(statusIconHtml), true, "install npm-plugin", "install npm-plugin", "spinner");
+        StatusBar.addIndicator(INDICATOR_ID2, $(statusIconHtmlText), true, "install npm-plugin", "install npm-plugin", "spinner");
+        StatusBar.showBusyIndicator(INDICATOR_ID);
+        //
     }
 
 

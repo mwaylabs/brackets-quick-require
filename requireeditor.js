@@ -15,8 +15,12 @@ define(function(require, exports, module) {
     var EditorManager = brackets.getModule("editor/EditorManager");
     var Dialogs = brackets.getModule("widgets/Dialogs");
 
+    var INDICATOR_ID = 'install-npm-module';
+    var INDICATOR_ID2 = 'install-npm-module-text';
+
     var parsedModuleList = null;
     var searchInEntireWord = false;
+    var StatusBar = brackets.getModule("widgets/StatusBar");
     //var moduleList = [];
 
     /**
@@ -184,12 +188,16 @@ define(function(require, exports, module) {
                 //append twipsy-tooltip div-container
                 $('#main-toolbar').append('<div id="twipsyTooltip"> </div>');
 
-                var $tempTwipsyDiv = $('#twipsyTooltip');
+                var $tempTwipsyDiv = $('#install-npm-module');
 
                 var templateContent = null;
                 var options = null;
 
                 if (err) {
+
+                    StatusBar.updateIndicator(INDICATOR_ID, true, "inspection-errors", err);
+
+
                     var $modalHtml = $('.npm-install-dialog .modal-body');
                     $modalHtml.html('<div class="status error">' + Strings.NOTIFICATON_ERROR_TITLE + ':  ' + Strings.ERROR_INVALID_NPM_MODULE + ' </div>');
 
@@ -211,6 +219,8 @@ define(function(require, exports, module) {
                     // Close the shown "install-dialog"
                     Dialogs.cancelModalDialogIfOpen('npm-install-dialog');
 
+                    StatusBar.updateIndicator(INDICATOR_ID, true, "inspection-valid", Strings.NOTIFICATON_INSTALL_NPMMODULE_END);
+                    StatusBar.updateIndicator(INDICATOR_ID2, false);
                     var currenInlineEditor = EditorManager.getActiveEditor().getInlineWidgets();
 
                     //
@@ -223,12 +233,15 @@ define(function(require, exports, module) {
                     });
                     //currenInlineEditor[0].close();
                     if (data) {
-                        var installedModuleName = data[0][0];
+
+
+
+                        var installedModuleName = data[data.length-1][0];
                         templateContent = '<div class="tooltip-arrow"></div><div class="tooltip-innerQuickRequire">' + installedModuleName + ' ' + Strings.NOTIFICATON_INSTALL_NPMMODULE_END + '</div>';
 
                         //configure twipsy
                         options = {
-                            placement: "left",
+                            placement: "above",
                             trigger: "manual",
                             autoHideDelay: 5000,
                             title: function() {
@@ -237,13 +250,22 @@ define(function(require, exports, module) {
                             template: templateContent
                         };
                         //Show twipsy with successmessage
-                        $tempTwipsyDiv.twipsy(options).twipsy("show");
+                        $tempTwipsyDiv = $('#install-npm-module');
+                        $tempTwipsyDiv.twipsy(options).twipsy('show');
 
                         //Trigger the success-event
                         $(document).trigger('quickrequire-npm-installed', [data, selectedModulName, selectedModulName]);
+
+                        StatusBar.updateIndicator(INDICATOR_ID, true, "inspection-valid", Strings.NOTIFICATON_INSTALL_NPMMODULE_END);
                     }
                     $(document).undelegate('.install-module-btn', 'click');
                 }
+                StatusBar.hideBusyIndicator(INDICATOR_ID);
+                setTimeout(function() {
+                    //StatusBar.updateIndicator(INDICATOR_ID, false);
+                    $tempTwipsyDiv.twipsy('hide');
+                    $tempTwipsyDiv.remove();
+                }, 5000);
             };
             //run npm install with the selectedModulName
             requireNpmbridge.callNpmInstall(selectedModulName, savePackage, notifyUserCallback);

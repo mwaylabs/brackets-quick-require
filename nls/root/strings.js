@@ -45,6 +45,8 @@ define({
     ERROR_INVALID_NPM_MODULE: "invalid npm module",
     SEARCH_FOR_NPM_MODULES: 'search for npm-modules',
 
+    BTN_RUN_IN_BACKGROUND: 'run in background',
+
     NPM_INSTALL_MODULE: 'Installing npm module',
     NPM_INSTALL: 'install npm',
     SAVE_IN_PACKAGE_JSON: ' (-S/--save)',
