@@ -135,3 +135,7 @@
 .fixedControls .changeSearchAlgo {
     margin-right: 5px;
 }
+#install-npm-module {
+    margin: 0 9px;
+    padding: 0 11px !important;
+}

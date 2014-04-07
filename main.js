@@ -8,6 +8,9 @@ define(function (require, exports, module) {
 
     var AppInit = brackets.getModule("utils/AppInit");
     var ProjectManager = brackets.getModule("project/ProjectManager");
+    var StatusBar = brackets.getModule("widgets/StatusBar");
+
+    var INDICATOR_ID = 'install-npm-module';
 
     var QuickRequire = require('quickrequire');
 
@@ -22,6 +25,8 @@ define(function (require, exports, module) {
     var Plugin = {
         initialize: function () {
             QuickRequire.initQuickRequire();
+            var statusIconHtml = Mustache.render("<div id=\"npm-install-status\">&nbsp;</div>");
+            StatusBar.addIndicator(INDICATOR_ID, $(statusIconHtml), false, "install npm-plugin");
 
         }
     };

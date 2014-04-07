@@ -16,7 +16,7 @@ define(function(require, exports, module) {
     var Dialogs = brackets.getModule("widgets/Dialogs");
 
     var INDICATOR_ID = 'install-npm-module';
-    var INDICATOR_ID2 = 'install-npm-module-text';
+    var INDICATOR_ID2 = 'installing-busy';
 
     var parsedModuleList = null;
     var searchInEntireWord = false;
@@ -218,9 +218,7 @@ define(function(require, exports, module) {
                 } else {
                     // Close the shown "install-dialog"
                     Dialogs.cancelModalDialogIfOpen('npm-install-dialog');
-
                     StatusBar.updateIndicator(INDICATOR_ID, true, "inspection-valid", Strings.NOTIFICATON_INSTALL_NPMMODULE_END);
-                    StatusBar.updateIndicator(INDICATOR_ID2, false);
                     var currenInlineEditor = EditorManager.getActiveEditor().getInlineWidgets();
 
                     //
@@ -249,6 +247,8 @@ define(function(require, exports, module) {
                             },
                             template: templateContent
                         };
+
+
                         //Show twipsy with successmessage
                         $tempTwipsyDiv = $('#install-npm-module');
                         $tempTwipsyDiv.twipsy(options).twipsy('show');
@@ -256,16 +256,14 @@ define(function(require, exports, module) {
                         //Trigger the success-event
                         $(document).trigger('quickrequire-npm-installed', [data, selectedModulName, selectedModulName]);
 
-                        StatusBar.updateIndicator(INDICATOR_ID, true, "inspection-valid", Strings.NOTIFICATON_INSTALL_NPMMODULE_END);
+                        StatusBar.updateIndicator(INDICATOR_ID, true, "inspection-valid", installedModuleName + ' ' + Strings.NOTIFICATON_INSTALL_NPMMODULE_END);
                     }
                     $(document).undelegate('.install-module-btn', 'click');
                 }
-                StatusBar.hideBusyIndicator(INDICATOR_ID);
-                setTimeout(function() {
-                    //StatusBar.updateIndicator(INDICATOR_ID, false);
-                    $tempTwipsyDiv.twipsy('hide');
+                StatusBar.hideBusyIndicator(INDICATOR_ID2);
+                /*setTimeout(function() {
                     $tempTwipsyDiv.remove();
-                }, 5000);
+                }, 5000);*/
             };
             //run npm install with the selectedModulName
             requireNpmbridge.callNpmInstall(selectedModulName, savePackage, notifyUserCallback);

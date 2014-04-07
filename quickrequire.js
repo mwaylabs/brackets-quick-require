@@ -19,7 +19,7 @@ define(function(require, exports, module) {
     ExtensionUtils.loadStyleSheet(module, "css/quickrequire.css");
 
     var INDICATOR_ID = 'install-npm-module';
-    var INDICATOR_ID2 = 'install-npm-module-text';
+    var INDICATOR_ID2 = 'installing-busy';
 
     /**
      * initialise
@@ -100,12 +100,9 @@ define(function(require, exports, module) {
     }
 
     function showProcessInStatusbar() {
-        var statusIconHtml = Mustache.render("<div id=\"npm-install-status\">&nbsp;</div> ", Strings);
-        var statusIconHtmlText = Mustache.render("<div id=\"npm-install-status-text\">installing node-module</div> ", Strings);
-        StatusBar.addIndicator(INDICATOR_ID, $(statusIconHtml), true, "install npm-plugin", "install npm-plugin", "spinner");
-        StatusBar.addIndicator(INDICATOR_ID2, $(statusIconHtmlText), true, "install npm-plugin", "install npm-plugin", "spinner");
-        StatusBar.showBusyIndicator(INDICATOR_ID);
-        //
+
+        StatusBar.updateIndicator(INDICATOR_ID, true, "install npm-plugin", "install npm-plugin", "spinner");
+        StatusBar.showBusyIndicator(INDICATOR_ID2);
     }
 
 
