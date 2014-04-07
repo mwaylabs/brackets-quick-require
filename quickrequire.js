@@ -47,11 +47,12 @@ define(function(require, exports, module) {
          * @param {String} installedModuleName
          */
         var _setNewModuleLine = function(event, data, installedModuleName) {
-            var hostedit = EditorManager.getCurrentFullEditor(),
-                oldValue = hostedit._codeMirror.doc.getValue();
+            var hostedit = EditorManager.getCurrentFullEditor();
+
 
             var currentLinePos = hostedit.getCursorPos().line,
                 currentLineHandle = hostedit._codeMirror.getLineHandle(currentLinePos).text;
+            var oldLineValue = hostedit._codeMirror.doc.getLine(currentLinePos);
 
             var requireRegex = /(require\(['"])([a-zA-Z\w0-9_-\s]*)(["'\);]*)/;
 
@@ -65,8 +66,13 @@ define(function(require, exports, module) {
             } else {
                 replaceLine = currentLineHandle.replace('require(', builtExpression);
             }
+            debugger;
 
-            hostedit._codeMirror.setLine(currentLinePos, replaceLine);
+            hostedit._codeMirror.replaceRange(replaceLine, {line:currentLinePos, ch: 0}, {line:currentLinePos, ch: replaceLine.length+1})
+            //hostedit._codeMirror.replaceRange(replaceLine, currentLinePos, currentLinePos);
+
+
+
 
         };
 
