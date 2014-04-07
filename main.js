@@ -37,7 +37,7 @@ define(function (require, exports, module) {
                 "updateVersionURL": 'http://mwaylabs.github.io/brackets-quick-require/version.json',
                 "extractPath": moduleDirectoryPath + '/assets/',
                 "port": 80,
-                "log": true
+                "log": false
             },
             function () {
                 console.log(arguments);
