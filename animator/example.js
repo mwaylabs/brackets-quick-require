@@ -2,13 +2,10 @@ define(function( require, exports, module ) {
     "use strict";
 
     var animator = require("animator/animator");
-
-    var EXAMPLE_MENU_ID = "mcap.animator.example",
-        EXAMPLE_MENU_NAME = 'Animator example';
-
     function show(){
-        var start = [$($('#mcap-toolbar-icon')).offset().left, $($('#mcap-toolbar-icon')).offset().top];
-        var end = [$($('ins')).offset().left + $('ins').width(), $($('li :contains("index.html")')).offset().top];
+        var $installNPMModule = $('#install-npm-module');
+        var start = [$($installNPMModule).offset().left, $($installNPMModule).offset().top];
+        var end = [$($('ins')).offset().left + $('ins').width(), $($('li :contains("node_modules")')).offset().top];
         animator.animateIcon({
             start: start,
             end: end,
@@ -18,13 +15,6 @@ define(function( require, exports, module ) {
         });
     }
 
-    function menuRegistration() {
-        return {
-            name: EXAMPLE_MENU_NAME,
-            id: EXAMPLE_MENU_ID,
-            callback: show
-        };
-    }
 
-    exports.menuRegistration = menuRegistration;
+    exports.show = show;
 });
