@@ -66,14 +66,8 @@ define(function(require, exports, module) {
             } else {
                 replaceLine = currentLineHandle.replace('require(', builtExpression);
             }
-            debugger;
 
             hostedit._codeMirror.replaceRange(replaceLine, {line:currentLinePos, ch: 0}, {line:currentLinePos, ch: replaceLine.length+1})
-            //hostedit._codeMirror.replaceRange(replaceLine, currentLinePos, currentLinePos);
-
-
-
-
         };
 
 
