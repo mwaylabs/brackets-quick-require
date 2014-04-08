@@ -42,6 +42,7 @@ define({
     NOTIFICATON_INSTALL_NPMMODULE_TITLE: "successfully installed",
     NOTIFICATON_INSTALL_NPMMODULE_END: "successfully installed",
     NOTIFICATON_ERROR_MESSAGE_PAST: "Something went wrong",
+    NOTIFICATION_ERROR_DURING_NPMINSTALL: "during the install process",
     ERROR_INVALID_NPM_MODULE: "invalid npm module",
     SEARCH_FOR_NPM_MODULES: 'search for npm-modules',
 
