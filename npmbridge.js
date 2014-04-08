@@ -7,9 +7,15 @@ define(function(require, exports, module) {
     var NodeConnection = brackets.getModule("utils/NodeConnection");
     var ExtensionUtils = brackets.getModule("utils/ExtensionUtils");
     var ProjectManager = brackets.getModule("project/ProjectManager");
+    var FileSystem = brackets.getModule('filesystem/FileSystem');
 
 
     var nodeConnection = null;
+
+
+
+
+
 
     /**
      * setup before calling the nodefunction
@@ -42,10 +48,52 @@ define(function(require, exports, module) {
             return promise;
         };
 
+
         //run the node-function
         run(nodeFunc);
 
     }
+
+
+
+    function _createPackageJson(savePackage) {
+        var dfd = $.Deferred();
+
+        if(savePackage) {
+            var fullPath = ProjectManager.getProjectRoot().fullPath;
+            var file = FileSystem.getFileForPath(fullPath+ '/package.json');
+
+            file.exists(function(err, exists) {
+
+                if(err) { return dfd.reject(); }
+
+                if(!exists) {
+                    // create new package.json
+
+                    ProjectManager.createNewItem('/', 'package.json', true, false).then(function(file) {
+
+                        var packageJsonContent = {
+                            version: "0.0.0",
+                            name: ""
+                        };
+                        file.write(JSON.stringify(packageJsonContent), function(err, stat) {
+                            dfd.resolve();
+                        });
+
+                    });
+
+                } else {
+                    dfd.resolve();
+                }
+            });
+        } else {
+            dfd.resolve();
+        }
+        return dfd.promise();
+    }
+
+
+
 
     /**
      * setup before calling the nodefunction
@@ -56,6 +104,7 @@ define(function(require, exports, module) {
     function callNpmInstall(moduleName, savePackage, cb) {
         if (!moduleName || !cb || typeof cb !== 'function')
             throw new Error('invalid params');
+
 
         /**
          * gets the current project path where
@@ -83,8 +132,12 @@ define(function(require, exports, module) {
             return promise;
         };
 
-        //run the node-function
-        run(nodeFunc);
+
+
+        $.when(_createPackageJson(savePackage)).then( function() {
+            //run the node-function
+            run(nodeFunc);
+        });
 
     }
 
