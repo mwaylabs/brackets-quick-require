@@ -202,7 +202,7 @@ define(function(require, exports, module) {
                     var options = {
                         placement: "left",
                         trigger: "manual",
-                        autoHideDelay: 2000,
+                        autoHideDelay: 3000,
                         title: function() {
                             return selectedModulName;
                         },
@@ -211,6 +211,7 @@ define(function(require, exports, module) {
                         }
                     };
                     //Show twipsy with errormessage
+                    $tempTwipsyDiv.data('twipsy', null);
                     $tempTwipsyDiv.twipsy(options).twipsy("show");
                     return;
 
@@ -219,7 +220,6 @@ define(function(require, exports, module) {
                     Dialogs.cancelModalDialogIfOpen('npm-install-dialog');
                     var currenInlineEditor = EditorManager.getActiveEditor().getInlineWidgets();
 
-                    //
                     _.each(currenInlineEditor, function(inlineEditor) {
                         // Close if it's a require-editor
                         if (inlineEditor.hasOwnProperty('requireEditor')) {
@@ -227,24 +227,21 @@ define(function(require, exports, module) {
                         }
 
                     });
-                    //currenInlineEditor[0].close();
                     if (data) {
                         var installedModuleName = data[data.length-1][0];
 
-                        templateContent = '<div id="' +installedModuleName+'"></div><div class="tooltip-arrow"></div><div class="tooltip-innerQuickRequire">' + installedModuleName + ' ' + Strings.NOTIFICATON_INSTALL_NPMMODULE_END + '</div></div>';
+                        templateContent = '<div class="tooltip-arrow"></div><div class="tooltip-innerQuickRequire">' + installedModuleName + ' ' + Strings.NOTIFICATON_INSTALL_NPMMODULE_END + '</div>';
 
                         //configure twipsy
                         var options = {
                             placement: "above",
                             trigger: "manual",
-                            autoHideDelay: 2000,
-                            title: function() {
-                                return selectedModulName;
-                            },
+                            autoHideDelay: 3000,
                             template: function() {
                                 return templateContent;
                             }
                         };
+                        $tempTwipsyDiv.data('twipsy', null);
                         $tempTwipsyDiv.twipsy(options).twipsy('show');
 
 
@@ -258,11 +255,6 @@ define(function(require, exports, module) {
                     $(document).undelegate('.install-module-btn', 'click');
                 }
                 StatusBar.hideBusyIndicator(INDICATOR_ID2);
-                setTimeout(function() {
-                    // Bugfix for twipsy-caching
-                    //$tempTwipsyDiv.twipsy('hide');
-
-                }, 5100);
             };
             //run npm install with the selectedModulName
             requireNpmbridge.callNpmInstall(selectedModulName, savePackage, notifyUserCallback);
