@@ -245,10 +245,6 @@ define(function(require, exports, module) {
                                 return templateContent;
                             }
                         };
-                        debugger;
-                        //Show twipsy with successmessage
-                        //$tempTwipsyDiv = $('#install-npm-module');
-
                         $tempTwipsyDiv.twipsy(options).twipsy('show');
 
 
