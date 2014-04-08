@@ -206,7 +206,9 @@ define(function(require, exports, module) {
                         title: function() {
                             return Strings.NOTIFICATON_INSTALL_NPMMODULE_TITLE;
                         },
-                        template: templateContent
+                        template: function() {
+                            return templateContent;
+                        }
                     };
                     //Show twipsy with errormessage
                     $tempTwipsyDiv.twipsy(options).twipsy("show");
@@ -215,7 +217,6 @@ define(function(require, exports, module) {
                 } else {
                     // Close the shown "install-dialog"
                     Dialogs.cancelModalDialogIfOpen('npm-install-dialog');
-                   // StatusBar.updateIndicator(INDICATOR_ID, true, "inspection-valid", Strings.NOTIFICATON_INSTALL_NPMMODULE_END);
                     var currenInlineEditor = EditorManager.getActiveEditor().getInlineWidgets();
 
                     //
@@ -230,8 +231,7 @@ define(function(require, exports, module) {
                     if (data) {
                         var installedModuleName = data[data.length-1][0];
 
-                        templateContent = null;
-                        templateContent = '<div class="tooltip-arrow"></div><div class="tooltip-innerQuickRequire">' + installedModuleName + ' ' + Strings.NOTIFICATON_INSTALL_NPMMODULE_END + '</div>';
+                        templateContent = '<div id="' +installedModuleName+'"></div><div class="tooltip-arrow"></div><div class="tooltip-innerQuickRequire">' + installedModuleName + ' ' + Strings.NOTIFICATON_INSTALL_NPMMODULE_END + '</div></div>';
 
                         //configure twipsy
                         var options = {
@@ -241,11 +241,14 @@ define(function(require, exports, module) {
                             title: function() {
                                 return Strings.NOTIFICATON_INSTALL_NPMMODULE_TITLE;
                             },
-                            template: templateContent
+                            template: function() {
+                                return templateContent;
+                            }
                         };
-
+                        debugger;
                         //Show twipsy with successmessage
-                        $tempTwipsyDiv = $('#install-npm-module');
+                        //$tempTwipsyDiv = $('#install-npm-module');
+
                         $tempTwipsyDiv.twipsy(options).twipsy('show');
 
 
