@@ -19,7 +19,7 @@ define(function (require, exports, module) {
     var moduleDirectoryPath = FileUtils.getNativeModuleDirectoryPath(module);
 
     ExtensionUtils.loadStyleSheet(module, "css/bootstrap-responsive.css");
-    ExtensionUtils.loadStyleSheet(module, "node_modules/font-awesome/css/font-awesome.css");
+
     var requireNpmbridge = require("npmbridge");
 
     var Plugin = {
