@@ -103,7 +103,10 @@ define(function(require, exports, module) {
         $(document).find('.primary').on('click', function() {
             StatusBar.hideBusyIndicator(INDICATOR_ID2);
             var hostedit = EditorManager.getActiveEditor().getInlineWidgets();
-            hostedit[0].close();
+            if(hostedit[0]) {
+                hostedit[0].close();
+            }
+
 
         });
     }
