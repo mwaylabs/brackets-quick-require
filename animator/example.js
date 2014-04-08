@@ -5,7 +5,14 @@ define(function( require, exports, module ) {
     function show(){
         var $installNPMModule = $('#install-npm-module');
         var start = [$($installNPMModule).offset().left, $($installNPMModule).offset().top];
-        var end = [$($('ins')).offset().left + $('ins').width(), $($('li :contains("node_modules")')).offset().top];
+
+        var $nodeModulesFolder = $('li :contains("node_modules")');
+
+        //if the node_modules folder isn't created yet, prevent animation
+        if($nodeModulesFolder.length === 0) {
+            return;
+        }
+        var end = [$($('ins')).offset().left + $('ins').width(), $($nodeModulesFolder).offset().top];
         animator.animateIcon({
             start: start,
             end: end,
