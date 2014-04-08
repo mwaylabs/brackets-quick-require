@@ -1,0 +1,32 @@
+v0.2.3:
+  date: 2014-04-08
+  changes:
+    - Fixes #5 - clear bound twipsy-obj before adding new
+    - Fixes #1 - resolved
+    - Fixes #2 - add check, whether div element is already applied to the dom. If not, prevent animation
+    - Fixes #4 change cursor back to default
+    - remove log statements
+    - update package.js
+    - remove debugging statement
+    - change tooltip-templ
+    - remove font-awesome
+    - update package.json
+    - add better error response
+    - remove debugging statement
+    - set logging to false (update-manager)
+    - UI Improvements, fix bug for sprint 38
+
+v0.2.2:
+  date: 2014-04-04
+  changes:
+    - change download-source to install it from filesys
+    - remove node_modules
+    - remove node_modules, update README.md
+    - add node_modules for deploy
+    - new version files
+    - rm file
+    - configure update mechanism
+    - add update-manager
+    - add alt. search algo "search in word"
+    - change default search algo
+    - impl. node update call
