@@ -191,10 +191,12 @@ define(function(require, exports, module) {
                 if (err) {
 
                     StatusBar.updateIndicator(INDICATOR_ID, true, "inspection-errors", err);
-
+                    StatusBar.hideBusyIndicator(INDICATOR_ID2);
 
                     var $modalHtml = $('.npm-install-dialog .modal-body');
-                    $modalHtml.html('<div class="status error">' + Strings.NOTIFICATON_ERROR_TITLE + ':  ' + Strings.ERROR_INVALID_NPM_MODULE + ' </div>');
+                    var errorContentDialog = '<div class="status error"><p>' + Strings.NOTIFICATON_ERROR_TITLE + ': ' + Strings.NOTIFICATON_ERROR_MESSAGE_PAST + ' ' + Strings.NOTIFICATION_ERROR_DURING_NPMINSTALL +'</p><p> '+ err.errno + ': ' + err.code + ' </p> </div>'
+                    $modalHtml.html(errorContentDialog);
+                    $modalHtml.parent().find('.primary').remove();
 
                     templateContent = '<div class="tooltip-arrow"></div><div class="tooltip-innerQuickRequire">' + Strings.NOTIFICATON_ERROR_TITLE + ':  ' + Strings.NOTIFICATON_ERROR_MESSAGE_PAST + '</div>';
                     var options = {
