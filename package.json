@@ -1,29 +1,17 @@
 {
     "name": "quick-require",
-    "title": "Quickrequire Inline Editor",
+    "title": "quick-require Brackets plugin",
+    "version": "0.2.0",
     "description": "Include and download node-modules. The quick-require inline-editor allows you to install node-module via npm. Right out of the document where you need it.",
-    "homepage": "http://www.mwaysolutions.com/",
-    "version": "0.1.0",
-    "author": "Marco Hanowski, Stefan Buck, Timo Weiß",
-    "license": "MIT",
-    "keywords": [
-        "npm",
-        "require",
-        "npm install",
-        "inline-editor"
-    ],
-    "categories": "utility",
+    "author": "M-Way Solutions GmbH <info@mwaysolutions.com>",
+    "dependencies": {},
+    "devDependencies": {},
+    "engines": {
+        "node": ">0.9",
+        "brackets": ">=0.37.0"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/mwaylabs/brackets-quick-require.git"
-    },
-    "engines": {
-        "brackets": ">=0.37.0"
-    },
-    "dependencies": {
-        "backbone": "1.1.0",
-        "npm": "^1.4.6",
-        "font-awesome": "^4.0.3",
-        "update-manager": "^0.2.1"
     }
 }
