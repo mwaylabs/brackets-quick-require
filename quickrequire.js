@@ -60,9 +60,15 @@ define(function(require, exports, module) {
 
             var replaceLine = null;
             var builtExpression = 'require("' + installedModuleName + '");';
+            var builtExpressionSingle = "require('" + installedModuleName + "');";
+            var regex = new RegExp('"');
 
             if (match && match[0]) {
-                replaceLine = currentLineHandle.replace(match[0], builtExpression);
+                if(regex.test(currentLineHandle)) {
+                    replaceLine = currentLineHandle.replace(match[0], builtExpression);
+                } else {
+                    replaceLine = currentLineHandle.replace(match[0], builtExpressionSingle);
+                }
             } else {
                 replaceLine = currentLineHandle.replace('require(', builtExpression);
             }
