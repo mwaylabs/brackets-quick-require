@@ -29,8 +29,6 @@
 
     function updateManagerUpdate(options, cb){
 
-        console.log('update', options, cb);
-
         options.error = function(e){
             cb(e);
         };

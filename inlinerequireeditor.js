@@ -55,8 +55,6 @@ define(function(require, exports, module) {
         $(doc).on("change", this._handleHostDocumentChange);
 
         this.hostEditor.setInlineWidgetHeight(this, this.requireEditor.getRootElement().outerHeight(), true);
-
-        console.log('onAdded');
     };
 
     /**
@@ -73,8 +71,6 @@ define(function(require, exports, module) {
         $(document).undelegate('.install-module-btn', 'click');
         doc.releaseRef();
         quickrequire.inlineEditors.shift(0, 1);
-        console.log('onClosed');
-
     };
 
     /**

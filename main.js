@@ -40,7 +40,8 @@ define(function (require, exports, module) {
                 "log": false
             },
             function () {
-                console.log(arguments);
+                //No logging
+                //console.log(arguments);
             })
     });
 

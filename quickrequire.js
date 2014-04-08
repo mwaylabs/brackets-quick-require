@@ -85,7 +85,6 @@ define(function(require, exports, module) {
      *
      */
     function openNpmInstallDialog() {
-        console.log('openDialog');
         var templateVars = {
             Strings: Strings,
             BracketsStrings: BracketsStrings
