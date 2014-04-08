@@ -92,9 +92,13 @@ define(function(require, exports, module) {
         var template = _.template(npmInstallDialog, templateVars);
         Dialogs.showModalDialogUsingTemplate(template);
         showProcessInStatusbar();
+
+        //Run in background
         $(document).find('.primary').on('click', function() {
+            StatusBar.hideBusyIndicator(INDICATOR_ID2);
             var hostedit = EditorManager.getActiveEditor().getInlineWidgets();
             hostedit[0].close();
+
         });
     }
 

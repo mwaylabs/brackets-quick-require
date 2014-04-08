@@ -204,7 +204,7 @@ define(function(require, exports, module) {
                         trigger: "manual",
                         autoHideDelay: 2000,
                         title: function() {
-                            return Strings.NOTIFICATON_INSTALL_NPMMODULE_TITLE;
+                            return selectedModulName;
                         },
                         template: function() {
                             return templateContent;
@@ -239,7 +239,7 @@ define(function(require, exports, module) {
                             trigger: "manual",
                             autoHideDelay: 2000,
                             title: function() {
-                                return Strings.NOTIFICATON_INSTALL_NPMMODULE_TITLE;
+                                return selectedModulName;
                             },
                             template: function() {
                                 return templateContent;
