@@ -6,16 +6,16 @@ The extension also allows you to set the 'save in package'-flag (`-S/--save`)
 ##Installation
 There are in fact three different ways to add the quick-require extension to your Brackets-Editor.
 
-- The Extension will be soon available in the Brackets Extension Registry. So you will be able to download it through the Brackets Extension Manager. There you will always find the latest stable release.
+- The Extension is available in the Brackets Extension Registry. So you are able to download it through the Brackets Extension Manager. There you will always find the latest stable release.
 
 - Install via URL:
  	1. Open the the Extension Manager from the File menu.
  	2. Click on Install form URL...
- 	3. Copy and paste following URL in the text field: `http://mwaylabs.github.io/brackets-quick-require/quick-require.zip`
+ 	3. Copy and paste following URL in the text field: `http://mwaylabs.github.io/brackets-quick-require/quickrequire-0.2.3.zip`
  	4. Click Install
  
 - Install from file system
-	1. [Download](http://mwaylabs.github.io/brackets-quick-require/quick-require.zip) this extension as a zip file.
+	1. [Download](http://mwaylabs.github.io/brackets-quick-require/quickrequire-0.2.3.zip) this extension as a zip file.
 	2. Unzip it in Brackets' `/extensions/user` folder. You can get there by selecting Show Extension Folder in the Help menu.
 	3. Reload Brackets.
 
