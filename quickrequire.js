@@ -2,7 +2,7 @@
 // https://github.com/mwaylabs/brackets-quick-require/blob/master/LICENCE
 
 define(function(require, exports, module) {
-    "use strict";
+    //"use strict";
     var EditorManager = brackets.getModule("editor/EditorManager"),
         ExtensionUtils = brackets.getModule("utils/ExtensionUtils"),
         InlineRequireEditor = require('inlinerequireeditor');
@@ -15,7 +15,7 @@ define(function(require, exports, module) {
     var StatusBar = brackets.getModule("widgets/StatusBar");
 
     var isOpen = false;
-    var inlineEditors = [];
+    inlineEditors = [];
     ExtensionUtils.loadStyleSheet(module, "css/quickrequire.css");
 
     var INDICATOR_ID = 'install-npm-module';
@@ -167,47 +167,51 @@ define(function(require, exports, module) {
      * @param {object} pos current cursor position
      */
     function inlineRequireProvider(hostEditor, pos) {
-        if(isOpen && inlineEditors.length) {
-            _.each(inlineEditors, function(edit_Pos) {
-                 if(edit_Pos.pos.line == pos.line) {
-                     edit_Pos.quickRequireEditor.close();
-                     var iToRemove = inlineEditors.indexOf(edit_Pos);
-                     inlineEditors.splice(iToRemove, 1);
-                     if(inlineEditors.length == 0) {
-                         isOpen = false;
-                     }
-                     return;
-                 } else {
-                     appendInlineWidget(hostEditor, pos);
-                 }
+        console.log('inlineRequireProvider', Date(), 'before: ' + inlineEditors.length, inlineEditors);
+        if(inlineEditors.length) {
+            var addNew = true;
+            _.remove(inlineEditors, function(editor) {
+                if(editor.pos.line == pos.line) {
+                    editor.quickRequireEditor.close();
+                    addNew = false;
+                    return true;
+                } else {
+                    return false;
+                }
             });
-            if(inlineEditors.length == 0) {
-                isOpen = false;
+            if(addNew) {
+                return appendInlineWidget(hostEditor, pos);
             }
+            console.log('inlineRequireProvider', Date(), 'after: ' + inlineEditors.length);
         }
         else {
-          return  appendInlineWidget(hostEditor, pos);
+            console.log('inlineRequireProvider', Date(), 'after: ' + inlineEditors.length);
+            return appendInlineWidget(hostEditor, pos);
         }
     }
 
     function appendInlineWidget(hostEditor, pos) {
+        console.log('appendInlineWidget', Date(), 'before: ' + inlineEditors.length);
         var context = prepareEditorForProvider(hostEditor, pos),
             result;
 
         if (!context) {
+            console.log('appendInlineWidget', Date(), 'after: ' + inlineEditors.length);
             return null;
         } else {
             result = new $.Deferred();
             var quickRequireEditor = new InlineRequireEditor(context);
             quickRequireEditor.load(hostEditor);
 
-            result.resolve(quickRequireEditor);
+
             inlineEditors.push({
                 quickRequireEditor: quickRequireEditor,
                 pos: pos
             });
-            isOpen = true;
+            result.resolve(quickRequireEditor);
+            console.log('appendInlineWidget', Date(), 'after: ' + inlineEditors.length);
             return result.promise();
+
         }
     }
     exports.openNpmInstallDialog = openNpmInstallDialog;

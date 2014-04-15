@@ -47,7 +47,7 @@ define(function(require, exports, module) {
      *
      */
     InlineRequireEditor.prototype.onAdded = function() {
-
+        debugger;
         InlineRequireEditor.prototype.parentClass.onAdded.apply(this, arguments);
 
         var doc = this.hostEditor.document;
@@ -78,6 +78,7 @@ define(function(require, exports, module) {
      */
     InlineRequireEditor.prototype._handleHostDocumentChange = function() {
         var moduleName = this._checkValue();
+        debugger;
         if (moduleName && typeof moduleName === 'string') {
             this.requireEditor.updateList(moduleName);
         } else {
