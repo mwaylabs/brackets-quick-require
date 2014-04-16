@@ -1,3 +1,10 @@
+v0.3.0:
+  date: 2014-04-16
+  changes:
+    - enhanced perfomanced
+    - add feature: it is now possible to work with as many inline-widgets as you want at the same time.
+    - bugfix: the extension doesn't crash any more by hitting 'CTRL/CMD+E' many times sequently
+
 v0.2.3:
   date: 2014-04-08
   changes:
