@@ -15,7 +15,7 @@ define(function(require, exports, module) {
     var EditorManager = brackets.getModule("editor/EditorManager");
     var Dialogs = brackets.getModule("widgets/Dialogs");
 
-    var animator = require("animator/example")
+    var animator = require("animator/example");
 
     var INDICATOR_ID = 'install-npm-module';
     var INDICATOR_ID2 = 'installing-busy';
@@ -23,7 +23,10 @@ define(function(require, exports, module) {
     var parsedModuleList = null;
     var searchInEntireWord = false;
     var StatusBar = brackets.getModule("widgets/StatusBar");
-    //var moduleList = [];
+
+    var quickrequire = require("quickrequire");
+    var currentTimestamp = null;
+    var selectedModulName = null;
 
     /**
      * Creates a new RequireEditor,
@@ -34,7 +37,7 @@ define(function(require, exports, module) {
      * @param {String} moduleName
      */
     function RequireEditor($parent, moduleName) {
-
+        this.timestamp = new Date().getTime();
         parsedModuleList = JSON.parse(moduleNameList);
 
         if (!$parent)
@@ -43,18 +46,20 @@ define(function(require, exports, module) {
             var matches = this.filterModules(moduleName);
             var templateVars = {
                 Strings: Strings,
-                matches: matches
+                matches: matches,
+                timestamp: this.timestamp
             };
+
             var template = _.template(requireEditorTemplate, templateVars);
             this.parentElement = $parent;
             this.$element = $(template);
             this.parentElement.append(this.$element);
+            this.parentElement.data('timestamp', this.timestamp);
+            if(moduleName !== '') {
+                registerClickEvent(this.$element);
+            }
 
-            this.setListeners();
             this.setTooltipListener();
-
-
-
         } else {
             throw new Error('moduleName is not defined');
         }
@@ -73,7 +78,8 @@ define(function(require, exports, module) {
                 }
             };
             // Show the twipsy with the explanation
-            $('#flagTooltip').twipsy(options);
+
+            $(this.$element).find('#flagTooltip').twipsy(options);
         }, 1000);
     };
 
@@ -87,7 +93,8 @@ define(function(require, exports, module) {
      * @param {String} moduleName
      */
     RequireEditor.prototype.updateList = function(moduleName) {
-        searchInEntireWord = $('.require-editor table').find('#search-algo').is(':checked');
+        //this.$element
+        searchInEntireWord = $(this.$element).find('#search-algo').is(':checked');
         var that = this;
 
         var matches = this.filterModules(moduleName);
@@ -96,21 +103,130 @@ define(function(require, exports, module) {
             Strings: Strings,
             matches: matches
         };
-        if (matches.aaData.length > 500) {
-            matches.aaData.splice(500, matches.aaData.length - 1);
+        if (matches.aaData.length > 200) {
+            matches.aaData.splice(200, matches.aaData.length - 1);
         }
         var template = _.template(requireEditorTemplate, templateVars);
         var $element = $(template);
-        $('.require-editor').replaceWith($element);
-        var $searchAlgoCheckbox = $('.require-editor table').find('#search-algo');
+
+
+        unregisterEvent(this.$element);
+        $(this.$element).replaceWith($element);
+        this.$element = $element;
+        registerClickEvent(this.$element);
+        //$('.require-editor').replaceWith($element);
+        var $searchAlgoCheckbox = $(this.$element).find('#search-algo');
         $searchAlgoCheckbox.on('change', function(){
-                that.updateList(moduleName);
+            that.updateList(moduleName);
         });
 
         if(searchInEntireWord) {
             $searchAlgoCheckbox.prop('checked', true);
         }
         this.setTooltipListener();
+
+    };
+
+    function registerClickEvent($element) {
+        $($element).find('.install-module-btn').on('click', function() {
+            var $parentInlineEditor = $(this).parents('.inline-widget');
+            currentTimestamp = $parentInlineEditor.data('timestamp');
+            var savePackage = $(this).parents('.inline-widget').find('#save-package').is(':checked');
+            // open the waiting dialog
+            quickrequire.openNpmInstallDialog(currentTimestamp);
+            selectedModulName = _getClickedModuleName(this);
+
+            //run npm install with the selectedModulName
+            console.log(selectedModulName, savePackage);
+            requireNpmbridge.callNpmInstall(selectedModulName, savePackage, notifyUserCallback);
+
+
+        });
+    }
+    function unregisterEvent($element) {
+        $($element).find('.install-module-btn').off('click');
+    }
+    function _getClickedModuleName(clickedEl) {
+        return $(clickedEl.parentElement.parentElement).find('.ext-name').html();
+    }
+
+    function _showErrorMsg(err){
+        var $modalHtml = $('.npm-install-dialog .modal-body');
+        var errorContentDialog = '<div class="status error"><p>' + Strings.NOTIFICATON_ERROR_TITLE + ': ' + Strings.NOTIFICATON_ERROR_MESSAGE_PAST + ' ' + Strings.NOTIFICATION_ERROR_DURING_NPMINSTALL +'</p><p> '+ err.errno + ': ' + err.code + ' </p> </div>'
+        $modalHtml.html(errorContentDialog);
+        $modalHtml.parent().find('.primary').remove();
+    }
+    function _showErrorTwipsy() {
+        var templateContent = '<div class="tooltip-arrow"></div><div class="tooltip-innerQuickRequire">' + Strings.NOTIFICATON_ERROR_TITLE + ':  ' + Strings.NOTIFICATON_ERROR_MESSAGE_PAST + '</div>';
+        var options = {
+            placement: "left",
+            trigger: "manual",
+            autoHideDelay: 3000,
+            template: function() {
+                return templateContent;
+            }
+        };
+        //Show twipsy with errormessage
+        $tempTwipsyDiv.data('twipsy', null);
+        $tempTwipsyDiv.twipsy(options).twipsy("show");
+    }
+
+    function _closeInstallDialog() {
+        // Close the shown "openNpmInstallDialog-dialog"
+        Dialogs.cancelModalDialogIfOpen('npm-install-dialog');
+        $(document).find('.modal-wrapper').remove();
+    }
+
+    /**
+     * give user feedback whether module-installation
+     * was successfull or it has failed
+     */
+
+    var notifyUserCallback = function(err, data) {
+        var $tempTwipsyDiv = $('#install-npm-module');
+        var templateContent = null;
+
+        if (err) {
+            StatusBar.updateIndicator(INDICATOR_ID, true, "inspection-errors", err);
+            StatusBar.hideBusyIndicator(INDICATOR_ID2);
+
+            _showErrorMsg(err);
+
+            _showErrorTwipsy();
+            return;
+
+        } else {
+            _closeInstallDialog();
+            quickrequire.removeAndCloseByTimestamp(currentTimestamp);
+
+            if (data) {
+                var installedModuleName = data[data.length-1][0];
+
+                templateContent = '<div class="tooltip-arrow"></div><div class="tooltip-innerQuickRequire">' + installedModuleName + ' ' + Strings.NOTIFICATON_INSTALL_NPMMODULE_END + '</div>';
+
+                //configure twipsy
+                var options = {
+                    placement: "above",
+                    trigger: "manual",
+                    autoHideDelay: 3000,
+                    template: function() {
+                        return templateContent;
+                    }
+                };
+                $tempTwipsyDiv.data('twipsy', null);
+                $tempTwipsyDiv.twipsy(options).twipsy('show');
+
+
+                //Trigger the success-event
+                $(document).trigger('quickrequire-npm-installed', [data, selectedModulName, selectedModulName]);
+
+                StatusBar.updateIndicator(INDICATOR_ID, true, "inspection-valid", installedModuleName + ' ' + Strings.NOTIFICATON_INSTALL_NPMMODULE_END);
+
+                animator.show();
+            }
+            $(document).undelegate('.install-module-btn', 'click');
+        }
+        StatusBar.hideBusyIndicator(INDICATOR_ID2);
     };
 
     /**
@@ -164,101 +280,12 @@ define(function(require, exports, module) {
         return array;
     };
 
-    /**
-     * register listeners
-     *
-     * register click-listener on '.install-module-btn'
-     */
+
+
+
+
     RequireEditor.prototype.setListeners = function() {
-        $(document).delegate('.install-module-btn', 'click', function(event) {
 
-            // open the waiting dialog
-            quickrequire.openNpmInstallDialog();
-            //get the name of the selected module-name
-            var selectedModulName = $(this.parentElement.parentElement).find('.ext-name').html();
-
-            var savePackage = $('.require-editor table').find('#save-package').is(':checked');
-            /**
-             * give user feedback whether module-installation
-             * was successfull or it has failed
-             */
-            var notifyUserCallback = function(err, data) {
-
-                var $tempTwipsyDiv = $('#install-npm-module');
-
-                var templateContent = null;
-
-                if (err) {
-
-                    StatusBar.updateIndicator(INDICATOR_ID, true, "inspection-errors", err);
-                    StatusBar.hideBusyIndicator(INDICATOR_ID2);
-
-                    var $modalHtml = $('.npm-install-dialog .modal-body');
-                    var errorContentDialog = '<div class="status error"><p>' + Strings.NOTIFICATON_ERROR_TITLE + ': ' + Strings.NOTIFICATON_ERROR_MESSAGE_PAST + ' ' + Strings.NOTIFICATION_ERROR_DURING_NPMINSTALL +'</p><p> '+ err.errno + ': ' + err.code + ' </p> </div>'
-                    $modalHtml.html(errorContentDialog);
-                    $modalHtml.parent().find('.primary').remove();
-
-                    templateContent = '<div class="tooltip-arrow"></div><div class="tooltip-innerQuickRequire">' + Strings.NOTIFICATON_ERROR_TITLE + ':  ' + Strings.NOTIFICATON_ERROR_MESSAGE_PAST + '</div>';
-                    var options = {
-                        placement: "left",
-                        trigger: "manual",
-                        autoHideDelay: 3000,
-                        title: function() {
-                            return selectedModulName;
-                        },
-                        template: function() {
-                            return templateContent;
-                        }
-                    };
-                    //Show twipsy with errormessage
-                    $tempTwipsyDiv.data('twipsy', null);
-                    $tempTwipsyDiv.twipsy(options).twipsy("show");
-                    return;
-
-                } else {
-                    // Close the shown "install-dialog"
-                    Dialogs.cancelModalDialogIfOpen('npm-install-dialog');
-                    var currenInlineEditor = EditorManager.getActiveEditor().getInlineWidgets();
-
-                    _.each(currenInlineEditor, function(inlineEditor) {
-                        // Close if it's a require-editor
-                        if (inlineEditor.hasOwnProperty('requireEditor')) {
-                            inlineEditor.close();
-                        }
-
-                    });
-                    if (data) {
-                        var installedModuleName = data[data.length-1][0];
-
-                        templateContent = '<div class="tooltip-arrow"></div><div class="tooltip-innerQuickRequire">' + installedModuleName + ' ' + Strings.NOTIFICATON_INSTALL_NPMMODULE_END + '</div>';
-
-                        //configure twipsy
-                        var options = {
-                            placement: "above",
-                            trigger: "manual",
-                            autoHideDelay: 3000,
-                            template: function() {
-                                return templateContent;
-                            }
-                        };
-                        $tempTwipsyDiv.data('twipsy', null);
-                        $tempTwipsyDiv.twipsy(options).twipsy('show');
-
-
-                        //Trigger the success-event
-                        $(document).trigger('quickrequire-npm-installed', [data, selectedModulName, selectedModulName]);
-
-                        StatusBar.updateIndicator(INDICATOR_ID, true, "inspection-valid", installedModuleName + ' ' + Strings.NOTIFICATON_INSTALL_NPMMODULE_END);
-
-                        animator.show();
-                    }
-                    $(document).undelegate('.install-module-btn', 'click');
-                }
-                StatusBar.hideBusyIndicator(INDICATOR_ID2);
-            };
-            //run npm install with the selectedModulName
-            requireNpmbridge.callNpmInstall(selectedModulName, savePackage, notifyUserCallback);
-        });
     };
     exports.RequireEditor = RequireEditor;
 });

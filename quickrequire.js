@@ -2,7 +2,7 @@
 // https://github.com/mwaylabs/brackets-quick-require/blob/master/LICENCE
 
 define(function(require, exports, module) {
-    //"use strict";
+    "use strict";
     var EditorManager = brackets.getModule("editor/EditorManager"),
         ExtensionUtils = brackets.getModule("utils/ExtensionUtils"),
         InlineRequireEditor = require('inlinerequireeditor');
@@ -15,8 +15,10 @@ define(function(require, exports, module) {
     var StatusBar = brackets.getModule("widgets/StatusBar");
 
     var isOpen = false;
-    inlineEditors = [];
+    var inlineEditors = [];
     ExtensionUtils.loadStyleSheet(module, "css/quickrequire.css");
+
+    var quickrequire = require("quickrequire");
 
     var INDICATOR_ID = 'install-npm-module';
     var INDICATOR_ID2 = 'installing-busy';
@@ -90,7 +92,7 @@ define(function(require, exports, module) {
      * open npm-install-dialog
      *
      */
-    function openNpmInstallDialog() {
+    function openNpmInstallDialog(timestampData) {
         var templateVars = {
             Strings: Strings,
             BracketsStrings: BracketsStrings
@@ -102,12 +104,9 @@ define(function(require, exports, module) {
         //Run in background
         $(document).find('.primary').on('click', function() {
             StatusBar.hideBusyIndicator(INDICATOR_ID2);
-            var hostedit = EditorManager.getActiveEditor().getInlineWidgets();
-            if(hostedit[0]) {
-                hostedit[0].close();
-            }
-
-
+            var $busyIndicator = $("#status-bar .spinner");
+            $busyIndicator.addClass("spin");
+            removeAndCloseByTimestamp(timestampData);
         });
     }
 
@@ -167,28 +166,54 @@ define(function(require, exports, module) {
      * @param {object} pos current cursor position
      */
     function inlineRequireProvider(hostEditor, pos) {
-        console.log('inlineRequireProvider', Date(), 'before: ' + inlineEditors.length, inlineEditors);
+        var addNew = true;
         if(inlineEditors.length) {
-            var addNew = true;
-            _.remove(inlineEditors, function(editor) {
-                if(editor.pos.line == pos.line) {
-                    editor.quickRequireEditor.close();
-                    addNew = false;
-                    return true;
-                } else {
-                    return false;
-                }
-            });
+            addNew = removeAndCloseByPos(pos);
             if(addNew) {
                 return appendInlineWidget(hostEditor, pos);
             }
-            console.log('inlineRequireProvider', Date(), 'after: ' + inlineEditors.length);
         }
         else {
-            console.log('inlineRequireProvider', Date(), 'after: ' + inlineEditors.length);
             return appendInlineWidget(hostEditor, pos);
         }
     }
+
+    /**
+     * Closes and removes an editor from the list.
+     *
+     * @returns {boolean} true if there was no open editor at this position
+     */
+    function removeAndCloseByPos(pos) {
+        var addNew = true;
+        _.remove(inlineEditors, function(editor) {
+            if(editor.pos.line == pos.line) {
+                editor.quickRequireEditor.close();
+                addNew = false;
+                return true;
+            } else {
+                return false;
+            }
+        });
+        return addNew;
+    }
+
+
+    /**
+     * the timestamp of the selected InlineEditor-Instance
+     * @param timestampData
+     */
+    function removeAndCloseByTimestamp(timestampData) {
+
+        _.remove(inlineEditors, function(editor) {
+            if(editor.quickRequireEditor.requireEditor.timestamp === timestampData) {
+                editor.quickRequireEditor.close();
+                return true;
+            } else {
+                return false;
+            }
+        });
+    }
+
 
     function appendInlineWidget(hostEditor, pos) {
         console.log('appendInlineWidget', Date(), 'before: ' + inlineEditors.length);
@@ -203,7 +228,6 @@ define(function(require, exports, module) {
             var quickRequireEditor = new InlineRequireEditor(context);
             quickRequireEditor.load(hostEditor);
 
-
             inlineEditors.push({
                 quickRequireEditor: quickRequireEditor,
                 pos: pos
@@ -217,5 +241,6 @@ define(function(require, exports, module) {
     exports.openNpmInstallDialog = openNpmInstallDialog;
     exports.initQuickRequire = initQuickRequire;
     exports.inlineEditors = inlineEditors;
+    exports.removeAndCloseByTimestamp = removeAndCloseByTimestamp;
 
 });

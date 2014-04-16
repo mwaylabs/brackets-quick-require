@@ -47,7 +47,6 @@ define(function(require, exports, module) {
      *
      */
     InlineRequireEditor.prototype.onAdded = function() {
-        debugger;
         InlineRequireEditor.prototype.parentClass.onAdded.apply(this, arguments);
 
         var doc = this.hostEditor.document;
@@ -62,7 +61,8 @@ define(function(require, exports, module) {
      * release text content out of the memory [releaseRef()]
      */
     InlineRequireEditor.prototype.onClosed = function() {
-
+        //keep the list clear
+        quickrequire.removeAndCloseByTimestamp(this.requireEditor.timestamp);
 
         InlineRequireEditor.prototype.parentClass.onClosed.apply(this, arguments);
 
@@ -70,7 +70,6 @@ define(function(require, exports, module) {
         $(doc).off("change", this._handleHostDocumentChange);
         $(document).undelegate('.install-module-btn', 'click');
         doc.releaseRef();
-        quickrequire.inlineEditors.shift(0, 1);
     };
 
     /**
@@ -78,7 +77,6 @@ define(function(require, exports, module) {
      */
     InlineRequireEditor.prototype._handleHostDocumentChange = function() {
         var moduleName = this._checkValue();
-        debugger;
         if (moduleName && typeof moduleName === 'string') {
             this.requireEditor.updateList(moduleName);
         } else {
