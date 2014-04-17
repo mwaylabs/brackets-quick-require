@@ -5,13 +5,17 @@ define(function(require, exports, module) {
     'use strict';
 
     var SpecRunnerUtils = brackets.getModule("spec/SpecRunnerUtils"),
-        FileUtils = brackets.getModule("file/FileUtils");
+        FileUtils = brackets.getModule("file/FileUtils"),
+        ExtensionLoader,
+        DocumentManager;
 
-    var InlineRequireEditor = require('inlinerequireeditor'),
-        npmbridge = require('npmbridge'),
-        quickrequire = require('quickrequire'),
-        RequireEditor = require('requireeditor').RequireEditor;
+    var InlineRequireEditor,
+        npmbridge,
+        quickrequire,
+        RequireEditor;
+
     var InlineWidget = brackets.getModule("editor/InlineWidget").InlineWidget;
+
 
 
     describe('quick-require', function() {
@@ -19,19 +23,16 @@ define(function(require, exports, module) {
 
         // load from testWindow
         var testWindow,
-            testDocument,
-            testEditor,
             brackets,
             extensionRequire,
             CommandManager,
             Commands,
             EditorManager,
             QuickView,
-            inline,
             editor,
             testInlineRequireEditor;
 
-        beforeEach(function() {
+        beforeFirst(function() {
 
             // Create a new window that will be shared by ALL tests in this spec.
             if (!testWindow) {
@@ -43,8 +44,17 @@ define(function(require, exports, module) {
                         CommandManager = brackets.test.CommandManager;
                         Commands = brackets.test.Commands;
                         EditorManager = brackets.test.EditorManager;
-                        extensionRequire = brackets.test.ExtensionLoader.getRequireContextForExtension("QuickView");
-                        QuickView = extensionRequire("main");
+                        /*extensionRequire = brackets.test.ExtensionLoader.getRequireContextForExtension("QuickView");
+                        QuickView = extensionRequire("main");*/
+                        DocumentManager     = testWindow.brackets.test.DocumentManager;
+                        ExtensionLoader     = testWindow.brackets.test.ExtensionLoader;
+
+                        extensionRequire = testWindow.brackets.getModule("utils/ExtensionLoader").getRequireContextForExtension("quickrequire");
+
+                        InlineRequireEditor = extensionRequire('inlinerequireeditor');
+                        npmbridge = extensionRequire('npmbridge');
+                        quickrequire = extensionRequire('quickrequire');
+                        RequireEditor = extensionRequire('requireeditor').RequireEditor;
                     });
                 });
 
@@ -76,6 +86,10 @@ define(function(require, exports, module) {
                 });
             }
         });
+
+        afterLast(function() {
+            testWindow = null;
+        })
 
 
 
@@ -297,14 +311,7 @@ define(function(require, exports, module) {
             });
 
             it('filterModules()', function() {
-                var expectedObjJquery = {
-                    "aaData": [
-                        ["jquery", "This should work.", "", "", 0, 0, 0, "", ""]
-                    ]
-                };
-                expect(re1.filterModules('jquery')).toEqual(jasmine.any(Object));
-
-                expect(re1.filterModules('jquery')).toEqual(expectedObjJquery);
+                
 
             });
 
