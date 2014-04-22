@@ -1,3 +1,8 @@
+v0.3.1:
+  date: 2014-04-22
+  changes:
+    - bugfix: change versioning of module list into semver | list will be updaten now correctly
+
 v0.3.0:
   date: 2014-04-16
   changes:
