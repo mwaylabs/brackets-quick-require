@@ -157,6 +157,7 @@ define(function(require, exports, module) {
         $modalHtml.parent().find('.primary').remove();
     }
     function _showErrorTwipsy() {
+        var $tempTwipsyDiv = $('#install-npm-module');
         var templateContent = '<div class="tooltip-arrow"></div><div class="tooltip-innerQuickRequire">' + Strings.NOTIFICATON_ERROR_TITLE + ':  ' + Strings.NOTIFICATON_ERROR_MESSAGE_PAST + '</div>';
         var options = {
             placement: "left",
