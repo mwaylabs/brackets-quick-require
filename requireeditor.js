@@ -156,11 +156,10 @@ define(function(require, exports, module) {
         $modalHtml.html(errorContentDialog);
         $modalHtml.parent().find('.primary').remove();
     }
-    function _showErrorTwipsy() {
-        var $tempTwipsyDiv = $('#install-npm-module');
+    function _showErrorTwipsy($tempTwipsyDiv) {
         var templateContent = '<div class="tooltip-arrow"></div><div class="tooltip-innerQuickRequire">' + Strings.NOTIFICATON_ERROR_TITLE + ':  ' + Strings.NOTIFICATON_ERROR_MESSAGE_PAST + '</div>';
         var options = {
-            placement: "left",
+            placement: "above",
             trigger: "manual",
             autoHideDelay: 3000,
             template: function() {
@@ -193,7 +192,7 @@ define(function(require, exports, module) {
 
             _showErrorMsg(err);
 
-            _showErrorTwipsy();
+            _showErrorTwipsy($tempTwipsyDiv);
             return;
 
         } else {
