@@ -4,16 +4,14 @@
 define(function (require, exports, module) {
     "use strict";
 
-    var Strings = require("strings");
-    var requireEditorTemplate = require("text!html/requireeditor.html");
-
-    var moduleNameList = require("text!assets/moduleList.json");
-
-    var requireNpmbridge = require("npmbridge");
     var _ = brackets.getModule("thirdparty/lodash");
     var EditorManager = brackets.getModule("editor/EditorManager");
     var Dialogs = brackets.getModule("widgets/Dialogs");
 
+    var Strings = require("strings");
+    var requireEditorTemplate = require("text!html/requireeditor.html");
+    var moduleNameList = require("text!assets/moduleList.json");
+    var requireNpmbridge = require("npmbridge");
     var animator = require("animator/example");
 
     var INDICATOR_ID = 'install-npm-module';

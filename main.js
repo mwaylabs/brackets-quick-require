@@ -5,14 +5,12 @@ define(function (require, exports, module) {
     "use strict";
 
     var ExtensionUtils = brackets.getModule("utils/ExtensionUtils");
-
     var AppInit = brackets.getModule("utils/AppInit");
     var ProjectManager = brackets.getModule("project/ProjectManager");
     var StatusBar = brackets.getModule("widgets/StatusBar");
+    var FileUtils = brackets.getModule("file/FileUtils");
 
     var QuickRequire = require('quickrequire');
-
-    var FileUtils = brackets.getModule("file/FileUtils");
 
     var moduleDirectoryPath = FileUtils.getNativeModuleDirectoryPath(module);
 

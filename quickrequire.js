@@ -3,14 +3,14 @@
 
 define(function(require, exports, module) {
     "use strict";
-    var EditorManager = brackets.getModule("editor/EditorManager"),
-        ExtensionUtils = brackets.getModule("utils/ExtensionUtils");
+    var EditorManager = brackets.getModule("editor/EditorManager");
+    var ExtensionUtils = brackets.getModule("utils/ExtensionUtils");
     var _ = brackets.getModule("thirdparty/lodash");
-    var InlineRequireEditor = require('inlinerequireeditor');
-
     var BracketsStrings = brackets.getModule("strings");
     var Dialogs = brackets.getModule("widgets/Dialogs");
     var StatusBar = brackets.getModule("widgets/StatusBar");
+
+    var InlineRequireEditor = require('inlinerequireeditor');
 
     var npmInstallDialog = require("text!html/npm-install-dialog.html");
     var Strings = require("strings");
@@ -29,7 +29,6 @@ define(function(require, exports, module) {
      * initialise
      */
     function initQuickRequire(options) {
-        debugger;
         apiOptions = options;
         var statusIconHtml = Mustache.render("<div id=\"npm-install-status\">&nbsp;</div>");
         StatusBar.addIndicator(INDICATOR_ID, $(statusIconHtml), false, "install npm-plugin");

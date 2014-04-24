@@ -5,8 +5,8 @@ define(function(require, exports, module) {
     'use strict';
 
     // Load modules
-    var RequireEditor = require("requireeditor").RequireEditor;
     var InlineWidget = brackets.getModule("editor/InlineWidget").InlineWidget;
+    var RequireEditor = require("requireeditor").RequireEditor;
     var quickrequire = require("quickrequire");
 
     var Strings = require("strings");
