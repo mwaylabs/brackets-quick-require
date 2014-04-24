@@ -49,7 +49,7 @@ define(function(require, exports, module) {
                         DocumentManager     = testWindow.brackets.test.DocumentManager;
                         ExtensionLoader     = testWindow.brackets.test.ExtensionLoader;
 
-                        extensionRequire = testWindow.brackets.getModule("utils/ExtensionLoader").getRequireContextForExtension("quickrequire");
+                        extensionRequire = testWindow.brackets.getModule("utils/ExtensionLoader").getRequireContextForExtension("quick-require");
 
                         InlineRequireEditor = extensionRequire('inlinerequireeditor');
                         npmbridge = extensionRequire('npmbridge');
@@ -309,13 +309,6 @@ define(function(require, exports, module) {
             it('filterModules should be a Function', function() {
                 expect(re1.filterModules).toEqual(jasmine.any(Function));
             });
-
-            it('filterModules()', function() {
-                
-
-            });
-
-
 
             it('setListeners should be a Function', function() {
                 expect(re1.setListeners).toEqual(jasmine.any(Function));
