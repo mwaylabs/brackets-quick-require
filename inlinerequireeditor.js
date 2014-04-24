@@ -11,9 +11,12 @@ define(function(require, exports, module) {
 
     var Strings = require("strings");
 
-    function InlineRequireEditor(context) {
+    var npmInstallCallback = null;
+
+    function InlineRequireEditor(context, options) {
         if (context && context.hasOwnProperty('start') && context.hasOwnProperty('cursorLine')) {
 
+            npmInstallCallback = (options && typeof options.npmInstall === 'function') ? options.npmInstall : null;
             this._start = context.start;
             this._cursorLine = context.cursorLine;
             this._handleHostDocumentChange = this._handleHostDocumentChange.bind(this);
@@ -38,7 +41,14 @@ define(function(require, exports, module) {
     InlineRequireEditor.prototype.load = function(hostEditor) {
         InlineRequireEditor.prototype.parentClass.load.apply(this, arguments);
         var moduleName = this._checkValue() || '';
-        this.requireEditor = new RequireEditor(this.$htmlContent, moduleName);
+        var config = {
+            moduleName: moduleName,
+            $parent: this.$htmlContent
+        };
+        if(npmInstallCallback){
+            config.npmInstall = npmInstallCallback;
+        }
+        this.requireEditor = new RequireEditor(config);
     };
 
     /**
