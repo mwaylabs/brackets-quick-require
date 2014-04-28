@@ -6,7 +6,7 @@
     "author": "M-Way Solutions GmbH <info@mwaysolutions.com>",
     "homepage": "https://github.com/mwaylabs/brackets-quick-require/",
     "dependencies": {
-
+        "update-manager": "0.2.x",
         "npm": "1.4.x",
         "backbone" : "1.1.x"
     },
