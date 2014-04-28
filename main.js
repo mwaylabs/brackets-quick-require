@@ -11,6 +11,7 @@ define(function (require, exports, module) {
     var FileUtils = brackets.getModule("file/FileUtils");
 
     var QuickRequire = require('brackets-quick-require/quickrequire');
+    var mcapCallback = require('brackets-quick-require/mcap-callback');
 
     var moduleDirectoryPath = FileUtils.getNativeModuleDirectoryPath(module);
 
@@ -20,7 +21,10 @@ define(function (require, exports, module) {
 
     var Plugin = {
         initialize: function () {
-            QuickRequire.initQuickRequire();
+            QuickRequire.initQuickRequire({
+                npmInstall: mcapCallback.saveInPackageJson,
+                hideSaveFlag: true
+            });
         }
     };
 
