@@ -6,10 +6,10 @@ define(function(require, exports, module) {
 
     // Load modules
     var InlineWidget = brackets.getModule("editor/InlineWidget").InlineWidget;
-    var RequireEditor = require("requireeditor").RequireEditor;
-    var quickrequire = require("quickrequire");
+    var RequireEditor = require("brackets-quick-require/requireeditor").RequireEditor;
+    var quickrequire = require("brackets-quick-require/quickrequire");
 
-    var Strings = require("strings");
+    var Strings = require("brackets-quick-require/strings");
 
     var npmInstallCallback = null;
     var hideSaveFlag = null;

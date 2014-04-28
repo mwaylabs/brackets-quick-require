@@ -10,13 +10,13 @@ define(function (require, exports, module) {
     var StatusBar = brackets.getModule("widgets/StatusBar");
     var FileUtils = brackets.getModule("file/FileUtils");
 
-    var QuickRequire = require('quickrequire');
+    var QuickRequire = require('brackets-quick-require/quickrequire');
 
     var moduleDirectoryPath = FileUtils.getNativeModuleDirectoryPath(module);
 
     ExtensionUtils.loadStyleSheet(module, "css/bootstrap-responsive.css");
 
-    var requireNpmbridge = require("npmbridge");
+    var requireNpmbridge = require("brackets-quick-require/npmbridge");
 
     var Plugin = {
         initialize: function () {

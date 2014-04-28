@@ -10,15 +10,14 @@ define(function(require, exports, module) {
     var Dialogs = brackets.getModule("widgets/Dialogs");
     var StatusBar = brackets.getModule("widgets/StatusBar");
 
-    var InlineRequireEditor = require('inlinerequireeditor');
+    var InlineRequireEditor = require('brackets-quick-require/inlinerequireeditor');
 
-    var npmInstallDialog = require("text!html/npm-install-dialog.html");
+    var npmInstallDialog = require("text!brackets-quick-require/html/npm-install-dialog.html");
     var Strings = require("strings");
 
     var inlineEditors = [];
     ExtensionUtils.loadStyleSheet(module, "css/quickrequire.css");
 
-    //var quickrequire = require("quickrequire");
 
     var INDICATOR_ID = 'install-npm-module';
     var INDICATOR_ID2 = 'installing-busy';
