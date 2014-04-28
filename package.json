@@ -5,7 +5,11 @@
     "description": "Include and download node-modules. The quick-require inline-editor allows you to install node-modules via npm. Right out of the document where you need it.",
     "author": "M-Way Solutions GmbH <info@mwaysolutions.com>",
     "homepage": "https://github.com/mwaylabs/brackets-quick-require/",
-    "dependencies": {},
+    "dependencies": {
+        "update-manager": "^0.2.1",
+        "npm": "^1.4.6",
+        "backbone" : "^1.1.0"
+},
     "devDependencies": {},
     "engines": {
         "node": ">0.9",
