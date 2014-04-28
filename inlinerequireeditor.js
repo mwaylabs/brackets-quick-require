@@ -13,10 +13,12 @@ define(function(require, exports, module) {
 
     var npmInstallCallback = null;
     var hideSaveFlag = null;
+    var preRender = null;
 
     function InlineRequireEditor(context, options) {
         if (context && context.hasOwnProperty('start') && context.hasOwnProperty('cursorLine')) {
             hideSaveFlag = (options && options.hideSaveFlag) ? options.hideSaveFlag : false;
+            preRender= (options && options.preRender) ? options.preRender : function() {return true};
             npmInstallCallback = (options && typeof options.npmInstall === 'function') ? options.npmInstall : null;
             this._start = context.start;
             this._cursorLine = context.cursorLine;
@@ -45,7 +47,7 @@ define(function(require, exports, module) {
         var config = {
             moduleName: moduleName,
             $parent: this.$htmlContent,
-            hideSaveFlag: hideSaveFlag
+            preRender: preRender
         };
         if(npmInstallCallback){
             config.npmInstall = npmInstallCallback;

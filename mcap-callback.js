@@ -174,11 +174,11 @@ define(function(require, exports, module) {
      * @param Quickrequire {}
      */
     function saveInPackageJson(data, Quickrequire) {
-        var currDoc = DocumentManager.getCurrentDocument()
+        var currDoc = DocumentManager.getCurrentDocument();
 
         if( !file.isPseudoPath(currDoc.file._path)) {
-            data.defaultCallback(data)
-            return
+            data.defaultCallback(data);
+            return;
         }
 
         quickrequire = Quickrequire;
@@ -204,7 +204,13 @@ define(function(require, exports, module) {
 
     }
 
-    //exports.createPackageJson = createPackageJson;
+
+    function preRender() {
+        var currDoc = DocumentManager.getCurrentDocument();
+        return file.isPseudoPath(currDoc.file._path);
+    }
+
+    exports.preRender = preRender;
     exports.saveInPackageJson = saveInPackageJson;
 
 

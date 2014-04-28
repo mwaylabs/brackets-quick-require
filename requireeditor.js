@@ -25,6 +25,7 @@ define(function (require, exports, module) {
     var currentTimestamp = null;
     var selectedModulName = null;
     var hideSaveFlag = false;
+    var preRender = null;
 
     /**
      * Creates a new RequireEditor,
@@ -36,6 +37,7 @@ define(function (require, exports, module) {
      */
     function RequireEditor(opt) {
         hideSaveFlag = opt.hideSaveFlag;
+        preRender = opt.preRender || function() {return false};
         var $parent = opt.$parent, moduleName = opt.moduleName;
         npmInstall = typeof  opt.npmInstall === 'function' ? opt.npmInstall : _npmInstall;
         this.timestamp = new Date().getTime();
@@ -62,6 +64,9 @@ define(function (require, exports, module) {
             }
 
             this.setTooltipListener();
+            if(preRender()) {
+                $(this.$element).find('#flagTooltip').remove();
+            }
         } else {
             throw new Error('moduleName is not defined');
         }
@@ -97,6 +102,7 @@ define(function (require, exports, module) {
     RequireEditor.prototype.updateList = function (moduleName) {
         //this.$element
         searchInEntireWord = $(this.$element).find('#search-algo').is(':checked');
+
         var that = this;
 
         var matches = this.filterModules(moduleName);
@@ -128,6 +134,10 @@ define(function (require, exports, module) {
             $searchAlgoCheckbox.prop('checked', true);
         }
         this.setTooltipListener();
+
+        if(preRender()) {
+            $(this.$element).find('#flagTooltip').remove();
+        }
 
     };
 
