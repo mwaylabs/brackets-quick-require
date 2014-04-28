@@ -8,7 +8,6 @@ define(function( require, exports, module ) {
     var requireNpmbridge = require("brackets-quick-require/npmbridge");
 
     function updateQuickrequireList() {
-        debugger;
         requireNpmbridge.callUpdate({
                 "updateVersionURL": 'http://mwaylabs.github.io/brackets-quick-require/version.json',
                 "extractPath": moduleDirectoryPath + '/assets/',
