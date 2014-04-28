@@ -6,6 +6,8 @@ define(function(require, exports, module) {
 
     var CommandManager = brackets.getModule("command/CommandManager");
 
+    var DocumentManager = brackets.getModule('document/DocumentManager');
+
     // Asset Backbone Model
     var Asset = require('models/asset');
 
@@ -15,6 +17,8 @@ define(function(require, exports, module) {
     var mCap = require('src/mCap');
 
     var project = require('project/project');
+
+    var file = require('src/file');
 
     var Strings = require("strings");
 
@@ -170,9 +174,15 @@ define(function(require, exports, module) {
      * @param Quickrequire {}
      */
     function saveInPackageJson(data, Quickrequire) {
+        var currDoc = DocumentManager.getCurrentDocument()
+
+        if( !file.isPseudoPath(currDoc.file._path)) {
+            data.defaultCallback(data)
+            return
+        }
+
         quickrequire = Quickrequire;
         quickrequire.openNpmInstallDialog(data.timestamp);
-
         saveDependency(data).then(function() {
 
             $(document).trigger('quickrequire-npm-installed', [data, data.module]);

@@ -4,7 +4,7 @@
 (function() {
     "use strict";
     var npm = require('npm');
-    var updateManager = require('../node_modules/update-manager/update-manager');
+    //var updateManager = require('../node_modules/update-manager/update-manager');
 
     /**
      * Runs the 'npm install'-command with the given path and moduleName
@@ -37,7 +37,7 @@
             cb(false, data);
         };
 
-        updateManager.update(options);
+        //updateManager.update(options);
     }
 
     /**

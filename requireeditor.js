@@ -37,7 +37,7 @@ define(function (require, exports, module) {
     function RequireEditor(opt) {
         hideSaveFlag = opt.hideSaveFlag;
         var $parent = opt.$parent, moduleName = opt.moduleName;
-        npmInstall = typeof  opt.npmInstall === 'function' ? opt.npmInstall : npmInstall;
+        npmInstall = typeof  opt.npmInstall === 'function' ? opt.npmInstall : _npmInstall;
         this.timestamp = new Date().getTime();
         parsedModuleList = JSON.parse(moduleNameList);
 
@@ -131,11 +131,15 @@ define(function (require, exports, module) {
 
     };
 
-    function npmInstall(opt) {
+    function _npmInstall(opt) {
         // open the waiting dialog
         quickrequire.openNpmInstallDialog(currentTimestamp);
         //run npm install with the selectedModulName
         requireNpmbridge.callNpmInstall(opt.module, opt.save, notifyUserCallback);
+    }
+
+    function npmInstall(opt) {
+        debugger;
     }
 
     function npmInstallCallback() {
@@ -146,7 +150,8 @@ define(function (require, exports, module) {
         npmInstall({
             save: savePackage,
             timestamp: currentTimestamp,
-            module: selectedModulName
+            module: selectedModulName,
+            defaultCallback: _npmInstall
         }, quickrequire);
     }
 
