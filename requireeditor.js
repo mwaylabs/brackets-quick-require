@@ -148,7 +148,7 @@ define(function (require, exports, module) {
             save: savePackage,
             timestamp: currentTimestamp,
             module: selectedModulName
-        });
+        }, quickrequire);
     }
 
     function registerClickEvent($element) {
