@@ -45,7 +45,6 @@ define(function (require, exports, module) {
             throw new Error('$parent is not defined');
         if (moduleName || moduleName === '') {
             var matches = this.filterModules(moduleName);
-            console.log(opt);
             var templateVars = {
                 Strings: Strings,
                 matches: matches,
