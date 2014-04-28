@@ -12,10 +12,11 @@ define(function(require, exports, module) {
     var Strings = require("strings");
 
     var npmInstallCallback = null;
+    var hideSaveFlag = null;
 
     function InlineRequireEditor(context, options) {
         if (context && context.hasOwnProperty('start') && context.hasOwnProperty('cursorLine')) {
-
+            hideSaveFlag = (options && options.hideSaveFlag) || false;
             npmInstallCallback = (options && typeof options.npmInstall === 'function') ? options.npmInstall : null;
             this._start = context.start;
             this._cursorLine = context.cursorLine;
@@ -43,7 +44,8 @@ define(function(require, exports, module) {
         var moduleName = this._checkValue() || '';
         var config = {
             moduleName: moduleName,
-            $parent: this.$htmlContent
+            $parent: this.$htmlContent,
+            hideSaveFlag: hideSaveFlag
         };
         if(npmInstallCallback){
             config.npmInstall = npmInstallCallback;

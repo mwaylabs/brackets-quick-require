@@ -13,7 +13,7 @@
                <span><%= Strings.INLINE_MODULE_DESCRIPTION %></span>
             </th>
             <th>
-               <div class="fixedControls"><div class="changeSearchAlgo"><input type="checkbox" id="search-algo" name="search-algo"> <label for="search-algo"><%= Strings.SEARCH_IN_WHOLE_WORD %></label></div> <div id="flagTooltip"><input type="checkbox" id="save-package" name="save-package"> <label for="save-package"><%= Strings.SAVE_IN_PACKAGE_JSON %></label></div></div>
+               <div class="fixedControls"><div class="changeSearchAlgo"><input type="checkbox" id="search-algo" name="search-algo"> <label for="search-algo"><%= Strings.SEARCH_IN_WHOLE_WORD %></label></div> <% if(!hideSaveFlag) { console.log(hideSaveFlag) %><div id="flagTooltip"><input type="checkbox" id="save-package" name="save-package"> <label for="save-package"><%= Strings.SAVE_IN_PACKAGE_JSON %></label></div><% } %></div>
             </th>
         </tr>
         </thead>

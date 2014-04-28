@@ -239,8 +239,6 @@ define(function(require, exports, module) {
             var quickRequireEditor = new InlineRequireEditor(context, apiOptions);
             quickRequireEditor.load(hostEditor);
 
-            $(document).trigger('inline-editor-added');
-
             inlineEditors.push({
                 quickRequireEditor: quickRequireEditor,
                 pos: pos

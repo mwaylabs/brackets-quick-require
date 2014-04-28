@@ -24,6 +24,7 @@ define(function (require, exports, module) {
     var quickrequire = require("quickrequire");
     var currentTimestamp = null;
     var selectedModulName = null;
+    var hideSaveFlag = false;
 
     /**
      * Creates a new RequireEditor,
@@ -34,7 +35,7 @@ define(function (require, exports, module) {
      * @param {String} moduleName
      */
     function RequireEditor(opt) {
-
+        hideSaveFlag = opt.hideSaveFlag;
         var $parent = opt.$parent, moduleName = opt.moduleName;
         npmInstall = typeof  opt.npmInstall === 'function' ? opt.npmInstall : npmInstall;
         this.timestamp = new Date().getTime();
@@ -44,10 +45,12 @@ define(function (require, exports, module) {
             throw new Error('$parent is not defined');
         if (moduleName || moduleName === '') {
             var matches = this.filterModules(moduleName);
+            console.log(opt);
             var templateVars = {
                 Strings: Strings,
                 matches: matches,
-                timestamp: this.timestamp
+                timestamp: this.timestamp,
+                hideSaveFlag: hideSaveFlag
             };
 
             var template = _.template(requireEditorTemplate, templateVars);
@@ -101,7 +104,9 @@ define(function (require, exports, module) {
 
         var templateVars = {
             Strings: Strings,
-            matches: matches
+            matches: matches,
+            hideSaveFlag: hideSaveFlag
+
         };
         if (matches.aaData.length > 200) {
             matches.aaData.splice(200, matches.aaData.length - 1);
