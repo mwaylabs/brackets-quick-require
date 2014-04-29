@@ -140,7 +140,7 @@ define(function (require, exports, module) {
         // open the waiting dialog
         quickrequire.openNpmInstallDialog(currentTimestamp);
         //run npm install with the selectedModulName
-        requireNpmbridge.callNpmInstall(opt.module, opt.save, notifyUserCallback);
+        requireNpmbridge.callNpmInstall(opt, opt.save, notifyUserCallback);
     }
 
     function npmInstallCallback() {
@@ -148,10 +148,15 @@ define(function (require, exports, module) {
         currentTimestamp = $parentInlineEditor.data('timestamp');
         var savePackage = $(this).parents('.inline-widget').find('#save-package').is(':checked');
         selectedModulName = _getClickedModuleName(this);
+        var selectedVersion = _getSelectedVersion(this);
+
+        console.log(selectedVersion);
+        console.log(selectedModulName);
         npmInstall({
             save: savePackage,
             timestamp: currentTimestamp,
-            module: selectedModulName
+            module: selectedModulName,
+            version: selectedVersion
         });
     }
 
@@ -166,6 +171,9 @@ define(function (require, exports, module) {
 
     function _getClickedModuleName(clickedEl) {
         return $(clickedEl.parentElement.parentElement).find('.ext-name').html();
+    }
+    function _getSelectedVersion(clickedEl) {
+        return $(clickedEl.parentElement.parentElement).find('select').val();
     }
 
     function _showErrorMsg(err) {

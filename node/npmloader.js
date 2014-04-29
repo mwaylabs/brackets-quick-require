@@ -17,7 +17,7 @@
             config.save = true;
         }
         npm.load(config, function() {
-            npm.commands.install(options.projectPath, [options.moduleName], function(er, data) {
+            npm.commands.install(options.projectPath, [options.moduleName+'@'+options.version], function(er, data) {
                 if (er) {
                     cb(er);
                     return;
