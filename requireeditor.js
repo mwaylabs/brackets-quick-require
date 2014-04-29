@@ -21,7 +21,6 @@ define(function (require, exports, module) {
     var searchInEntireWord = false;
     var StatusBar = brackets.getModule("widgets/StatusBar");
 
-    var select2 = require("brackets-quick-require/node_modules/select2-browserify/select2/select2");
 
     var quickrequire = require("brackets-quick-require/quickrequire");
     var currentTimestamp = null;
