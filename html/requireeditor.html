@@ -4,62 +4,74 @@
         <thead>
         <tr >
             <th style="width:23%">
-               <span><%= Strings.INLINE_MODULE_TITLE %></span>
+                <span><%= Strings.INLINE_MODULE_TITLE %></span>
             </th>
             <th>
-               <span>Downloads</span>
+                <span>Downloads</span>
             </th>
             <th>
-               <span><%= Strings.INLINE_MODULE_DESCRIPTION %></span>
+                <span><%= Strings.INLINE_MODULE_DESCRIPTION %></span>
             </th>
             <th>
-               <div class="fixedControls"><div class="changeSearchAlgo"><input type="checkbox" id="search-algo" name="search-algo"> <label for="search-algo"><%= Strings.SEARCH_IN_WHOLE_WORD %></label></div> <div id="flagTooltip"><input type="checkbox" id="save-package" name="save-package"> <label for="save-package"><%= Strings.SAVE_IN_PACKAGE_JSON %></label></div></div>
+                <div class="fixedControls"><div class="changeSearchAlgo"><input type="checkbox" id="search-algo" name="search-algo"> <label for="search-algo"><%= Strings.SEARCH_IN_WHOLE_WORD %></label></div> <div id="flagTooltip"><input type="checkbox" id="save-package" name="save-package"> <label for="save-package"><%= Strings.SAVE_IN_PACKAGE_JSON %></label></div></div>
             </th>
         </tr>
         </thead>
         <tbody>
         <% if(!matches.initial && matches.aaData.length === 0){ %>
-            <tr>
-                <td class="no-match">
-                    <span><%= Strings.INLINE_MODULE_NO_RESULTS %></span>
-                </td>
-            </tr>
+        <tr>
+            <td class="no-match">
+                <span><%= Strings.INLINE_MODULE_NO_RESULTS %></span>
+            </td>
+        </tr>
 
         <% } %>
 
         <% if(matches.initial){ %>
-            <tr>
-                <td>
-                    <span><%= Strings.SEARCH_FOR_NPM_MODULES %></span>
-                </td>
-                <td>
+        <tr>
+            <td>
+                <span><%= Strings.SEARCH_FOR_NPM_MODULES %></span>
+            </td>
+            <td>
 
-                </td>
-                <td>
+            </td>
+            <td>
                 <span><%= Strings.INSERT_MODULE_NAME %></span>
             </td>
-            </tr>
+        </tr>
 
         <% } %>
 
         <% _.each(matches.aaData, function(item, key){ %>
-            <tr>
-                <td class="ext-info">
-                    <div class="name-wrapper"><span class="ext-name"><%= item[0] %></span></div>
-                </td>
-                <td class="dlc">
-                    <% if(item[2]) { %><!--i class="fa fa-cloud-download"></i--> <%= item[2] %><%  } %>
-                </td>
-                <td class="ext-desc">
-                    <div class="description-wrapper"><span><%= item[1] %></span></div>
-                </td>
-                <td class="ext-action">
-                    <button data-uuid="{{attributes.uuid}}" class="btn btn-mini update install-module-btn" data-extension-id="brackets-nodejs">
-                        <%= Strings.INLINE_MODULE_INSTALL %>
-                    </button>
-                </td>
+        <tr>
+            <td class="ext-info">
+                <div class="name-wrapper"><span class="ext-name"><%= item[0] %></span></div>
+            </td>
+            <td class="dlc">
+                <% if(item[2]) { %><!--i class="fa fa-cloud-download"></i--> <%= item[2] %><%  } %>
+            </td>
+            <td class="ext-desc">
+                <div class="description-wrapper"><span><%= item[1] %></span></div>
+            </td>
+            <td class="ext-version">
+                <select class="select-version">
+                    <option value="latest">latest</option>
+                <% _.each(item[3], function(item, key){ %>
+                    <option value="<%= item %>"> <%= item %> </option>
+                <% }) %>
+                </select>
 
-            </tr>
+            </td>
+            <td class="ext-action">
+                <button data-uuid="{{attributes.uuid}}" class="btn btn-mini update install-module-btn" data-extension-id="brackets-nodejs">
+                    <%= Strings.INLINE_MODULE_INSTALL %>
+                </button>
+            </td>
+
+        </tr>
+
+
+
         <% }) %>
         </tbody>
     </table>

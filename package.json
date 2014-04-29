@@ -8,7 +8,8 @@
     "dependencies": {
         "update-manager": "0.2.x",
         "npm": "1.4.x",
-        "backbone" : "1.1.x"
+        "backbone" : "1.1.x",
+        "select2-browserify": "^3.4.5"
     },
     "devDependencies": {},
     "engines": {
