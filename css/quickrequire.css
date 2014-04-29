@@ -19,7 +19,7 @@
 }
 
 .require-editor .ext-desc {
-    width: auto;    
+    width: auto;
     font-weight: normal;
     -webkit-user-select: text;
     -khtml-user-select: text;
@@ -28,6 +28,41 @@
     -o-user-select: text;
     user-select: text;
     cursor: text;
+}
+
+
+.require-editor .ext-version {
+    width: auto;
+}
+.require-editor .ext-version ul {
+    margin:0;
+}
+.require-editor .ext-version ul li {
+    list-style: none;
+    position: relative;
+}
+.require-editor .ext-version-line {
+    display:none;
+}
+.require-editor .ext-version-line ul {
+    margin:0;
+}
+.require-editor .ext-version-line ul li {
+    float:left;
+    list-style: none;
+    margin-right: 10px;
+    cursor: pointer;
+    padding: 5px;
+}
+.require-editor .ext-version .arrow {
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 7px;
+    left: 33px;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid black;
 }
 
 .require-editor td {

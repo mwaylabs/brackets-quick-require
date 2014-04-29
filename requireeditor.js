@@ -108,6 +108,7 @@ define(function (require, exports, module) {
             hideSaveFlag: hideSaveFlag
 
         };
+        // Limit the amount of shown items
         if (matches.aaData.length > 200) {
             matches.aaData.splice(200, matches.aaData.length - 1);
         }
@@ -153,6 +154,16 @@ define(function (require, exports, module) {
 
     function registerClickEvent($element) {
         $($element).find('.install-module-btn').on('click', npmInstallCallback);
+        $($element).find('.ext-version').on('click', function() {
+
+            var nextParent = $(this).parent().next()[0];
+           //console.log($(nextParent).hasClass('ext-version-line'));
+
+            if($(nextParent).hasClass('ext-version-line')) {
+                $(nextParent).toggle();
+            }
+
+        });
     }
 
     function unregisterEvent($element) {
