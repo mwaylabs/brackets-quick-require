@@ -3,6 +3,10 @@ define(function( require, exports, module ) {
     "use strict";
 
     var FileUtils = brackets.getModule("file/FileUtils");
+    var ExtensionUtils = brackets.getModule("utils/ExtensionUtils");
+
+    ExtensionUtils.loadStyleSheet(module, "css/bootstrap-responsive.css");
+    ExtensionUtils.loadStyleSheet(module, "node_modules/select2-browserify/select2/select2.css");
 
     var moduleDirectoryPath = FileUtils.getNativeModuleDirectoryPath(module);
     var requireNpmbridge = require("brackets-quick-require/npmbridge");
