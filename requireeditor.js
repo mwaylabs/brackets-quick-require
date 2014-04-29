@@ -8,11 +8,11 @@ define(function (require, exports, module) {
     var EditorManager = brackets.getModule("editor/EditorManager");
     var Dialogs = brackets.getModule("widgets/Dialogs");
 
-    var Strings = require("brackets-quick-require/strings");
-    var requireEditorTemplate = require("text!brackets-quick-require/html/requireeditor.html");
-    var moduleNameList = require("text!brackets-quick-require/assets/moduleList.json");
-    var requireNpmbridge = require("brackets-quick-require/npmbridge");
-    var animator = require("brackets-quick-require/animator/example");
+    var Strings = require("strings");
+    var requireEditorTemplate = require("text!html/requireeditor.html");
+    var moduleNameList = require("text!assets/moduleList.json");
+    var requireNpmbridge = require("npmbridge");
+    var animator = require("animator/example");
 
     var INDICATOR_ID = 'install-npm-module';
     var INDICATOR_ID2 = 'installing-busy';
@@ -20,6 +20,8 @@ define(function (require, exports, module) {
     var parsedModuleList = null;
     var searchInEntireWord = false;
     var StatusBar = brackets.getModule("widgets/StatusBar");
+
+    var select2 = require("select2");
 
     var quickrequire = require("brackets-quick-require/quickrequire");
     var currentTimestamp = null;
@@ -102,7 +104,6 @@ define(function (require, exports, module) {
     RequireEditor.prototype.updateList = function (moduleName) {
         //this.$element
         searchInEntireWord = $(this.$element).find('#search-algo').is(':checked');
-
         var that = this;
 
         var matches = this.filterModules(moduleName);
@@ -113,6 +114,7 @@ define(function (require, exports, module) {
             hideSaveFlag: hideSaveFlag
 
         };
+        // Limit the amount of shown items
         if (matches.aaData.length > 200) {
             matches.aaData.splice(200, matches.aaData.length - 1);
         }
@@ -145,11 +147,7 @@ define(function (require, exports, module) {
         // open the waiting dialog
         quickrequire.openNpmInstallDialog(currentTimestamp);
         //run npm install with the selectedModulName
-        requireNpmbridge.callNpmInstall(opt.module, opt.save, notifyUserCallback);
-    }
-
-    function npmInstall(opt) {
-        debugger;
+        requireNpmbridge.callNpmInstall(opt, opt.save, notifyUserCallback);
     }
 
     function npmInstallCallback() {
@@ -157,16 +155,22 @@ define(function (require, exports, module) {
         currentTimestamp = $parentInlineEditor.data('timestamp');
         var savePackage = $(this).parents('.inline-widget').find('#save-package').is(':checked');
         selectedModulName = _getClickedModuleName(this);
+        var selectedVersion = _getSelectedVersion(this);
+
+        console.log(selectedVersion);
+        console.log(selectedModulName);
         npmInstall({
             save: savePackage,
             timestamp: currentTimestamp,
             module: selectedModulName,
-            defaultCallback: _npmInstall
+            defaultCallback: _npmInstall,
+            version: selectedVersion
         }, quickrequire);
     }
 
     function registerClickEvent($element) {
         $($element).find('.install-module-btn').on('click', npmInstallCallback);
+        $($element).find('.ext-version .select-version').select2();
     }
 
     function unregisterEvent($element) {
@@ -175,6 +179,9 @@ define(function (require, exports, module) {
 
     function _getClickedModuleName(clickedEl) {
         return $(clickedEl.parentElement.parentElement).find('.ext-name').html();
+    }
+    function _getSelectedVersion(clickedEl) {
+        return $(clickedEl.parentElement.parentElement).find('select').val();
     }
 
     function _showErrorMsg(err) {
