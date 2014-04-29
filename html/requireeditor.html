@@ -54,10 +54,13 @@
                 <div class="description-wrapper"><span><%= item[1] %></span></div>
             </td>
             <td class="ext-version">
-                <ul>
-                    <li>latest <div class="arrow"> </div></li>
+                <select class="select-version">
+                    <option value="latest">latest</option>
+                <% _.each(item[3], function(item, key){ %>
+                    <option value="<%= item %>"> <%= item %> </option>
+                <% }) %>
+                </select>
 
-                </ul>
             </td>
             <td class="ext-action">
                 <button data-uuid="{{attributes.uuid}}" class="btn btn-mini update install-module-btn" data-extension-id="brackets-nodejs">
@@ -67,21 +70,7 @@
 
         </tr>
 
-        <% if(item[3] && item[3].length > 0) { %>
-            <tr class="ext-version-line">
-                <td class="ext-info"> </td>
-                <td class="dlc"> </td>
-                <td class="ext-desc">
-                    <ul>
-                        <% _.each(item[3], function(item, key){ %>
-                        <li data-version="<%= item %>"><%= item %></li>
-                        <% }) %>
-                    </ul>
-                </td>
-                <td class="ext-version"> </td>
-                <td class="ext-action"></td>
-            </tr>
-        <% } %>
+
 
         <% }) %>
         </tbody>

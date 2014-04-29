@@ -22,6 +22,9 @@ define(function (require, exports, module) {
     var StatusBar = brackets.getModule("widgets/StatusBar");
 
     var quickrequire = require("quickrequire");
+
+    var select2 = require("select2");
+
     var currentTimestamp = null;
     var selectedModulName = null;
     var hideSaveFlag = false;
@@ -154,16 +157,7 @@ define(function (require, exports, module) {
 
     function registerClickEvent($element) {
         $($element).find('.install-module-btn').on('click', npmInstallCallback);
-        $($element).find('.ext-version').on('click', function() {
-
-            var nextParent = $(this).parent().next()[0];
-           //console.log($(nextParent).hasClass('ext-version-line'));
-
-            if($(nextParent).hasClass('ext-version-line')) {
-                $(nextParent).toggle();
-            }
-
-        });
+        $($element).find('.ext-version .select-version').select2();
     }
 
     function unregisterEvent($element) {
