@@ -1,6 +1,6 @@
 brackets-quick-require
 ======================
-brackets-quick-require is a extension to Adobe Brackets that allows you to search and install node-modules out of the npm-registry - without even leaving the file where you want to use it.
+brackets-quick-require is a extension for Adobe Brackets that allows you to search and install node-modules out of the npm-registry - without even leaving the file where you want to use it.
 The extension also allows you to set the 'save in package'-flag (`-S/--save`)
 
 ##Installation
