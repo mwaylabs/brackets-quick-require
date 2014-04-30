@@ -43,7 +43,9 @@ define(function (require, exports, module) {
         var $parent = opt.$parent, moduleName = opt.moduleName;
         npmInstall = typeof  opt.npmInstall === 'function' ? opt.npmInstall : _npmInstall;
         this.timestamp = new Date().getTime();
-        parsedModuleList = JSON.parse(moduleNameList);
+        if(!parsedModuleList) {
+            parsedModuleList = JSON.parse(moduleNameList);
+        }
 
         if (!$parent)
             throw new Error('$parent is not defined');
@@ -114,10 +116,6 @@ define(function (require, exports, module) {
             hideSaveFlag: hideSaveFlag
 
         };
-        // Limit the amount of shown items
-        if (matches.aaData.length > 200) {
-            matches.aaData.splice(200, matches.aaData.length - 1);
-        }
         var template = _.template(requireEditorTemplate, templateVars);
         var $element = $(template);
 
@@ -305,6 +303,11 @@ define(function (require, exports, module) {
                     return element;
                 }
             });
+        }
+
+        // Limit the amount of shown items
+        if (matches.length > 150) {
+            matches.splice(150, matches.length - 1);
         }
 
         array = {
