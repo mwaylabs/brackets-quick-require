@@ -175,6 +175,7 @@
 
 .fixedControls {
     position:absolute;
+    z-index:1;
     top:0;
     right:14px;
     background: #dfe2e2;
