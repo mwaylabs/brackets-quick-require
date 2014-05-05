@@ -54,13 +54,14 @@
                 <div class="description-wrapper"><span><%= item[1] %></span></div>
             </td>
             <td class="ext-version">
-                <select class="select-version">
-                    <option value="latest">latest</option>
-                <% _.each(item[3], function(item, key){ %>
-                    <option value="<%= item %>"> <%= item %> </option>
-                <% }) %>
-                </select>
-
+                <% if(item[3]) { %>
+                    <select class="select-version">
+                        <option value="latest">latest</option>
+                    <% _.each(item[3], function(item, key){ %>
+                        <option value="<%= item %>"> <%= item %> </option>
+                    <% }) %>
+                    </select>
+                <% } %>
             </td>
             <td class="ext-action">
                 <button data-uuid="{{attributes.uuid}}" class="btn btn-mini update install-module-btn" data-extension-id="brackets-nodejs">
