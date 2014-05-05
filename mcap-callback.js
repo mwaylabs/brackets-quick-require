@@ -122,10 +122,10 @@ define(function(require, exports, module) {
      * @returns {*|{name: string, version: string, description: string, main: string, author: string, dependencies: {}}}
      * @private
      */
-    function _extendPackageJsonContent(dependency, oldContent) {
+    function _extendPackageJsonContent(data, oldContent) {
         var content = oldContent;
         //extend dependencies with dependency
-        content.dependencies[dependency] = '*';
+        content.dependencies[data.module] = data.version;
         return content;
     }
 
@@ -149,7 +149,7 @@ define(function(require, exports, module) {
             return dfd.reject({msg: 'Invalid package.json'}).promise();
         }
         // modify package json
-        newContent = _extendPackageJsonContent(data.module, oldContent);
+        newContent = _extendPackageJsonContent(data, oldContent);
         newContent = JSON.stringify(newContent, null, 2);
         // save package json
         if(newContent !== "null"){
@@ -170,7 +170,7 @@ define(function(require, exports, module) {
 
     /**
      *
-     * @param data {save: boolean, timestamp: number, module: String}
+     * @param data {{save: boolean, timestamp: number, module: String, version: String}}
      * @param Quickrequire {}
      */
     function saveInPackageJson(data, Quickrequire) {
@@ -192,7 +192,7 @@ define(function(require, exports, module) {
             CommandManager.execute('mcap-npm-install')
 
         }).fail(function(err) {
-            console.log('failed');
+            console.log('failed', err);
             var $modalHtml = $('.npm-install-dialog .modal-body');
             var errorContentDialog = '<div class="status error"><p>' + Strings.NOTIFICATON_ERROR_TITLE + ': ' + Strings.NOTIFICATON_ERROR_MESSAGE_PAST + ' ' + Strings.NOTIFICATION_ERROR_DURING_NPMINSTALL + '</p><p>' + err.msg + '</p> </div>'
             $modalHtml.html(errorContentDialog);

@@ -8,11 +8,11 @@ define(function (require, exports, module) {
     var EditorManager = brackets.getModule("editor/EditorManager");
     var Dialogs = brackets.getModule("widgets/Dialogs");
 
-    var Strings = require("strings");
-    var requireEditorTemplate = require("text!html/requireeditor.html");
-    var moduleNameList = require("text!assets/moduleList.json");
-    var requireNpmbridge = require("npmbridge");
-    var animator = require("animator/example");
+    var Strings = require("brackets-quick-require/strings");
+    var requireEditorTemplate = require("text!brackets-quick-require/html/requireeditor.html");
+    var moduleNameList = require("text!brackets-quick-require/assets/moduleList.json");
+    var requireNpmbridge = require("brackets-quick-require/npmbridge");
+    var animator = require("brackets-quick-require/animator/example");
 
     var INDICATOR_ID = 'install-npm-module';
     var INDICATOR_ID2 = 'installing-busy';
@@ -21,12 +21,12 @@ define(function (require, exports, module) {
     var searchInEntireWord = false;
     var StatusBar = brackets.getModule("widgets/StatusBar");
 
-    var select2 = require("select2");
 
     var quickrequire = require("brackets-quick-require/quickrequire");
     var currentTimestamp = null;
     var selectedModulName = null;
     var hideSaveFlag = false;
+    var npmInstall = null;
     var preRender = null;
 
     /**
@@ -116,10 +116,6 @@ define(function (require, exports, module) {
             hideSaveFlag: hideSaveFlag
 
         };
-        // Limit the amount of shown items
-        if (matches.aaData.length > 200) {
-            matches.aaData.splice(200, matches.aaData.length - 1);
-        }
         var template = _.template(requireEditorTemplate, templateVars);
         var $element = $(template);
 
@@ -307,6 +303,11 @@ define(function (require, exports, module) {
                     return element;
                 }
             });
+        }
+
+        // Limit the amount of shown items
+        if (matches.length > 150) {
+            matches.splice(150, matches.length - 1);
         }
 
         array = {
