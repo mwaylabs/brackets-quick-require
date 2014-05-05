@@ -43,7 +43,9 @@ define(function (require, exports, module) {
         var $parent = opt.$parent, moduleName = opt.moduleName;
         npmInstall = typeof  opt.npmInstall === 'function' ? opt.npmInstall : _npmInstall;
         this.timestamp = new Date().getTime();
-        parsedModuleList = JSON.parse(moduleNameList);
+        if(!parsedModuleList) {
+            parsedModuleList = JSON.parse(moduleNameList);
+        }
 
         if (!$parent)
             throw new Error('$parent is not defined');
@@ -283,7 +285,7 @@ define(function (require, exports, module) {
             _.each(parsedModuleList['rows'], function (element) {
                 var index = element[0].indexOf(module);
                 if (index === 0) {
-                    if (element[1].length > 53) {
+                    if (element [1] && element[1].length > 53) {
                         element[1] = element[1].slice(0, 50);
                         element[1] = element[1] + '...';
                     }
@@ -297,7 +299,7 @@ define(function (require, exports, module) {
                 /*var b = element[1].search(module);*/
 
                 if (a >= 0 /*|| b >= 0*/) {
-                    if (element[1].length > 53) {
+                    if (element [1] && element[1].length > 53) {
                         element[1] = element[1].slice(0, 50);
                         element[1] = element[1] + '...';
                     }
