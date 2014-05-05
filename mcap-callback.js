@@ -8,6 +8,9 @@ define(function(require, exports, module) {
 
     var DocumentManager = brackets.getModule('document/DocumentManager');
 
+    var Dialogs = brackets.getModule('widgets/Dialogs');
+    var DefaultDialogs = brackets.getModule('widgets/DefaultDialogs');
+
     // Asset Backbone Model
     var Asset = require('models/asset');
 
@@ -174,14 +177,25 @@ define(function(require, exports, module) {
      * @param Quickrequire {}
      */
     function saveInPackageJson(data, Quickrequire) {
+        quickrequire = Quickrequire;
+
         var currDoc = DocumentManager.getCurrentDocument();
 
         if( !file.isPseudoPath(currDoc.file._path)) {
             data.defaultCallback(data);
             return;
         }
+        // if we are remote but in the client folder
+        // show modal, do nothing
+        if( sidebar.getCurrentProjectRootAsset().attributes.name == 'client') {
+            var dialog = Dialogs.showModalDialog(DefaultDialogs.DIALOG_ID_ERROR, 'Unable to install a node-module on remote-client', 'Currently its not supported to install a node-module on remote-client.', [{className: 'btn primary', text: 'Ok'}]);
+            $(dialog._$dlg).find('.btn').on('click', function() {
+                quickrequire.removeAndCloseByTimestamp(data.timestamp);
+            });
+            return;
+        }
 
-        quickrequire = Quickrequire;
+
         quickrequire.openNpmInstallDialog(data.timestamp);
         saveDependency(data).then(function() {
 
