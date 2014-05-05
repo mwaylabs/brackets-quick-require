@@ -1,7 +1,12 @@
+v0.4.0:
+  date: 2014-05-05
+  changes:
+    - add feature: now it is possible to install a specific version of a node-module.
+
 v0.3.1:
   date: 2014-04-22
   changes:
-    - bugfix: change versioning of module list into semver | list will be updaten now correctly
+    - bugfix: change versioning of module list into semver | list will be updated now correctly
 
 v0.3.0:
   date: 2014-04-16
