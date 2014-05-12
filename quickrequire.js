@@ -33,7 +33,7 @@ define(function(require, exports, module) {
         StatusBar.addIndicator(INDICATOR_ID, $(statusIconHtml), false, "install npm-plugin");
 
         // register new inlineRequireProvider
-        EditorManager.registerInlineEditProvider(inlineRequireProvider);
+        EditorManager.registerInlineEditProvider(inlineRequireProvider, 10);
         _registerEvents();
     }
 
