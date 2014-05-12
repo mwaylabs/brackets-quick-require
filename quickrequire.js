@@ -23,6 +23,7 @@ define(function(require, exports, module) {
     var INDICATOR_ID2 = 'installing-busy';
 
     var apiOptions = null;
+    var inlineProviderPriority = 10;
 
     /**
      * initialise
@@ -33,7 +34,8 @@ define(function(require, exports, module) {
         StatusBar.addIndicator(INDICATOR_ID, $(statusIconHtml), false, "install npm-plugin");
 
         // register new inlineRequireProvider
-        EditorManager.registerInlineEditProvider(inlineRequireProvider, 10);
+        //
+        EditorManager.registerInlineEditProvider(inlineRequireProvider, inlineProviderPriority);
         _registerEvents();
     }
 
