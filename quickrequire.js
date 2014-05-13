@@ -9,6 +9,7 @@ define(function(require, exports, module) {
     var BracketsStrings = brackets.getModule("strings");
     var Dialogs = brackets.getModule("widgets/Dialogs");
     var StatusBar = brackets.getModule("widgets/StatusBar");
+    var Panel = require("panel/panel");
 
     var InlineRequireEditor = require('inlinerequireeditor');
 
@@ -97,6 +98,8 @@ define(function(require, exports, module) {
      *
      */
     function openNpmInstallDialog(timestampData) {
+        debugger;
+        Panel.show();
         var templateVars = {
             Strings: Strings,
             BracketsStrings: BracketsStrings
@@ -124,13 +127,13 @@ define(function(require, exports, module) {
         var socketIoClient = require("socketClient").connect('http://localhost:1234');
         socketIoClient.on('connect', function() {
             console.log('here we are', arguments);
-            $('#problems-panel').find('tbody').html('');
+            $('.npm-logger-container').find('tbody').html('');
 
         });
 
         socketIoClient.on('npmLogging', function(message) {
             console.log(message);
-            $('#problems-panel').find('tbody').append('<tr></tr><td>' + message.prefix + '</td><td>' + message.message + '</td><td>' + message.level + '</td></tr>');
+            $('.npm-logger-container').find('tbody').append('<tr><td class="line-number">' + message.prefix + '</td><td>' + message.message + '</td><td>' + message.level + '</td></tr>');
         });
     }
 

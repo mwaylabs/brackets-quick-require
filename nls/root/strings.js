@@ -26,6 +26,8 @@ define({
     LABEL: 'Label',
     SEARCH: 'Search',
 
+    EDITOR: 'npm install log',
+
 
     // Notifications
     NOTIFICATON_ERROR_TITLE: "Error",
