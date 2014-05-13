@@ -141,6 +141,10 @@ define(function (require, exports, module) {
     function npmInstall(opt) {
         // open the waiting dialog
         quickrequire.openNpmInstallDialog(currentTimestamp);
+
+        // open socket.io connection
+        quickrequire.openSocketIoConnection(currentTimestamp);
+
         //run npm install with the selectedModulName
         requireNpmbridge.callNpmInstall(opt, opt.save, notifyUserCallback);
     }

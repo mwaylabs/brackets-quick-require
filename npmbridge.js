@@ -78,6 +78,7 @@ define(function(require, exports, module) {
             });
             promise.done(function(data) {
                 if (typeof cb === 'function') {
+                    console.log('testend', arguments);
                     cb(null, data);
                 }
             });

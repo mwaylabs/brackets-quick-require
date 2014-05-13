@@ -15,6 +15,7 @@ define(function(require, exports, module) {
     var npmInstallDialog = require("text!html/npm-install-dialog.html");
     var Strings = require("strings");
 
+
     var inlineEditors = [];
     ExtensionUtils.loadStyleSheet(module, "css/quickrequire.css");
 
@@ -24,6 +25,8 @@ define(function(require, exports, module) {
     var INDICATOR_ID2 = 'installing-busy';
 
     var apiOptions = null;
+
+    var socketIoClient = null;
 
     /**
      * initialise
@@ -117,6 +120,20 @@ define(function(require, exports, module) {
         StatusBar.showBusyIndicator(INDICATOR_ID2);
     }
 
+    function openSocketIoConnection() {
+        var socketIoClient = require("socketClient").connect('http://localhost:1234');
+        socketIoClient.on('connect', function() {
+            console.log('here we are', arguments);
+            $('#problems-panel').find('tbody').html('');
+
+        });
+
+        socketIoClient.on('npmLogging', function(message) {
+            console.log(message);
+            $('#problems-panel').find('tbody').append('<tr></tr><td>' + message.prefix + '</td><td>' + message.message + '</td><td>' + message.level + '</td></tr>');
+        });
+    }
+
 
     /**
      * Set up for inlineRequireProvider.
@@ -206,7 +223,6 @@ define(function(require, exports, module) {
      * @param timestampData
      */
     function removeAndCloseByTimestamp(timestampData) {
-
         _.remove(inlineEditors, function(editor) {
             if(editor.quickRequireEditor.requireEditor.timestamp === timestampData) {
                 editor.quickRequireEditor.close();
@@ -249,6 +265,7 @@ define(function(require, exports, module) {
 
         }
     }
+    exports.openSocketIoConnection = openSocketIoConnection;
     exports.openNpmInstallDialog = openNpmInstallDialog;
     exports.removeAndCloseByTimestamp = removeAndCloseByTimestamp;
     exports.initQuickRequire = initQuickRequire;

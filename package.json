@@ -1,14 +1,16 @@
 {
   "name": "quick-require",
   "title": "quick-require Brackets plugin",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Include and download node-modules. The quick-require inline-editor allows you to install node-modules via npm. Right out of the document where you need it.",
   "author": "M-Way Solutions GmbH <info@mwaysolutions.com>",
   "homepage": "https://github.com/mwaylabs/brackets-quick-require/",
   "dependencies": {
-    "select2-browserify": "^3.4.5",
     "backbone": "^1.1.2",
     "npm": "^1.4.9",
+    "select2-browserify": "^3.4.5",
+    "socket.io": "^1.0.0-pre2",
+    "socket.io-client": "^1.0.0-pre2",
     "update-manager": "^0.2.1"
   },
   "devDependencies": {},

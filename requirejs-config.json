@@ -2,12 +2,16 @@
     "paths": {
         "underscore": "node_modules/backbone/node_modules/underscore/underscore",
         "backbone": "node_modules/backbone/backbone",
-        "select2": "node_modules/select2-browserify/select2/select2"
+        "select2": "node_modules/select2-browserify/select2/select2",
+        "socketClient": "node_modules/socket.io-client/socket.io"
     },
 
     "shim": {
         "underscore": {
             "exports": "_"
+        },
+        "socketClient": {
+            "exports": "socket.io-client"
         },
         "backbone": {
             "deps": ["underscore"],
