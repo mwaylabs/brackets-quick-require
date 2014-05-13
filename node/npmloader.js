@@ -8,6 +8,7 @@
     var domain = require('domain');
     var io = require('../node_modules/socket.io/index.js');
     var connection = null;
+    var pubSocket = null;
 
     /**
      * Runs the 'npm install'-command with the given path and moduleName
@@ -19,19 +20,12 @@
                 console.log('create a connection');
                 connection = io.listen(1234);
             }
-            connection.sockets.on('connection', function( socket ) {
 
-                console.log('connected', socket.id);
-                /*socket.on('shutdown', function() {
-                    console.log('disconnect', socket.id);
-                    socket.disconnect();
-                });*/
-
-            });
         } catch (e) {
             console.log(e);
         }
         var msgArray = [];
+
         var npmInstallDomain = domain.create();
         try {
             npmInstallDomain.run(function() {
@@ -41,27 +35,38 @@
                 }
                 //config.loglevel = 'info';
                 npm.load(config, function() {
-                    npm.commands.install(options.projectPath, [options.moduleName+'@'+options.version], function(er, data) {
-                        if (er) {
-                            cb(er);
-                            return;
-                        }
-                        cb(false, data);
-                    });
+                    if(connection.sockets.sockets.length) {
+                        npmInstall();
+                    }
                     connection.sockets.on('connection', function( socket ) {
-                        console.log('connected', socket.id);
-                        npm.registry.log.on('log.http', function(message) {
-
-
-                            //console.log(msgArray);
-
-                            socket.emit('npmLogging', message);
-
-
-
-
-                        });
+                        pubSocket = socket;
+                        console.log('im connected');
+                        emitEvents();
+                        npmInstall();
                     });
+
+                    function emitEvents() {
+                        npm.registry.log.on('log.http', function(message) {
+                            pubSocket.emit('npmHttpLogging', message);
+                        });
+
+                        npm.registry.log.on('log.warn', function(message) {
+                            pubSocket.emit('npmWarnLogging', message);
+                        });
+
+                        npm.registry.log.on('log.error', function(message) {
+                            pubSocket.emit('npmErrorLogging', message);
+                        });
+                    }
+                    function npmInstall() {
+                        npm.commands.install(options.projectPath, [options.moduleName+'@'+options.version], function(er, data) {
+                            if (er) {
+                                cb(er);
+                                return;
+                            }
+                            cb(false, data);
+                        });
+                    }
 
                 });
 

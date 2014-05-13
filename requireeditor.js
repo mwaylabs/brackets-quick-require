@@ -50,7 +50,7 @@ define(function (require, exports, module) {
             throw new Error('$parent is not defined');
         if (moduleName || moduleName === '') {
             var matches = this.filterModules(moduleName);
-            console.log(opt);
+
             var templateVars = {
                 Strings: Strings,
                 matches: matches,
@@ -156,8 +156,6 @@ define(function (require, exports, module) {
         selectedModulName = _getClickedModuleName(this);
         var selectedVersion = _getSelectedVersion(this);
 
-        console.log(selectedVersion);
-        console.log(selectedModulName);
         npmInstall({
             save: savePackage,
             timestamp: currentTimestamp,
@@ -234,6 +232,8 @@ define(function (require, exports, module) {
 
             if (data) {
                 var installedModuleName = data[data.length - 1][0];
+                quickrequire.completeLogger(data);
+
 
                 templateContent = '<div class="tooltip-arrow"></div><div class="tooltip-innerQuickRequire">' + installedModuleName + ' ' + Strings.NOTIFICATON_INSTALL_NPMMODULE_END + '</div>';
 

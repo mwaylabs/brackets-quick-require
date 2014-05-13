@@ -15,6 +15,7 @@ define(function (require, exports, module) {
     var moduleDirectoryPath = FileUtils.getNativeModuleDirectoryPath(module);
 
     ExtensionUtils.loadStyleSheet(module, "css/bootstrap-responsive.css");
+    ExtensionUtils.loadStyleSheet(module, "css/quickrequire.css");
     ExtensionUtils.loadStyleSheet(module, "node_modules/select2-browserify/select2/select2.css");
 
     var requireNpmbridge = require("npmbridge");

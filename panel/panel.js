@@ -58,26 +58,6 @@ define(function( require, exports ) {
     }
 
     /**
-     * Open the panel
-     * @param fileName
-     * @param editor
-     * @private
-     */
-    function _openPanel( fileName, editor ) {
-        // set the current editor
-        _currentEditor = editor || _getActiveEditor();
-        // set the current document
-        _currentDocument = _currentEditor.document;
-        // clear previous change event bindings
-        $(_currentDocument).off('change', documentChange);
-        // set change event
-        $(_currentDocument).on('change', documentChange);
-        // show the panel
-        show();
-    }
-
-
-    /**
      * Show the panel
      * @param text
      * @returns {*}
@@ -117,18 +97,11 @@ define(function( require, exports ) {
      * @param settings
      * @returns {*}
      */
-    function toggle( settings ) {
+    function toggle() {
         if( bottomPanel.isVisible() ) {
             hide();
-            if( settings && typeof settings.on === 'function' ) {
-                settings.on();
-            }
         } else {
             show();
-            if( settings && typeof settings.off === 'function' ) {
-                settings.off();
-            }
-
         }
         // return this for chaining
         return this;
@@ -137,8 +110,13 @@ define(function( require, exports ) {
     AppInit.appReady(function() {
         // set the current editor
         _currentEditor = _getActiveEditor();
+        _registerEvent();
 
     });
+
+    function _registerEvent() {
+        $('#install-npm-module').on('click', toggle);
+    }
 
     // when a file changes determine if the panel should be visible or not
     $(EditorManager).on('activeEditorChange', function( event, editor ) {
@@ -153,6 +131,7 @@ define(function( require, exports ) {
 
 
     // API
+    exports._registerEvent = _registerEvent;
     exports.show = show;
     exports.hide = hide;
     exports.toggle = toggle;

@@ -198,3 +198,10 @@
     margin: 0 9px;
     padding: 0 11px !important;
 }
+
+#npm-logger tr.warn td {
+    background: #f0ad4e;
+}
+#npm-logger tr.error td {
+    background: #e9322d;
+}

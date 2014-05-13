@@ -27,7 +27,12 @@ define(function(require, exports, module) {
 
     var apiOptions = null;
 
-    var socketIoClient = null;
+    var socketIoClient = require("socketClient");
+    var socketConnection = null;
+    var scrollheight = null;
+
+    // this is where the log table lives
+    var $npmLoggerContainer = null;
 
     /**
      * initialise
@@ -98,8 +103,8 @@ define(function(require, exports, module) {
      *
      */
     function openNpmInstallDialog(timestampData) {
-        debugger;
         Panel.show();
+        Panel._registerEvent();
         var templateVars = {
             Strings: Strings,
             BracketsStrings: BracketsStrings
@@ -124,18 +129,65 @@ define(function(require, exports, module) {
     }
 
     function openSocketIoConnection() {
-        var socketIoClient = require("socketClient").connect('http://localhost:1234');
-        socketIoClient.on('connect', function() {
-            console.log('here we are', arguments);
-            $('.npm-logger-container').find('tbody').html('');
 
-        });
 
-        socketIoClient.on('npmLogging', function(message) {
-            console.log(message);
-            $('.npm-logger-container').find('tbody').append('<tr><td class="line-number">' + message.prefix + '</td><td>' + message.message + '</td><td>' + message.level + '</td></tr>');
+        // we gonna connect only once
+        if(!socketConnection) {
+            socketConnection = socketIoClient.connect('http://localhost:1234', {reconnect: false});
+        }
+
+        //Listen on connect. if fired, listen to some npmLogging
+        socketConnection.on('connect', function() {
+
+            socketConnection.on('npmHttpLogging', function(message) {
+                appendLogLine(message);
+            });
+            socketConnection.on('npmErrorLogging', function(message) {
+                appendLogLine(message);
+            });
+            socketConnection.on('npmWarnLogging', function(message) {
+                appendLogLine(message);
+            });
+
         });
     }
+    var i = 0;
+    function appendLogLine(message, warn) {
+        console.log(++i);
+        if(!$npmLoggerContainer) {
+            $npmLoggerContainer = $('.npm-logger-container');
+        }
+        if(!scrollheight) {
+            scrollheight = $npmLoggerContainer.find('.bottom-panel-table').height();
+        }
+        //Increase by 27px (its the height of one entry).
+        //we do it this way to save a bunch of dom-access
+        scrollheight += 27;
+
+        // append new log-line
+        $($npmLoggerContainer).find('tbody').append(getLogLine(message));
+
+        // scroll always to the bottom in the panel
+        $($npmLoggerContainer).scrollTop(scrollheight);
+    }
+
+    function completeLogger(data) {
+        debugger;
+        var $npmLogger = $('#npm-logger');
+        $npmLogger.append('<div class="finish">' + data + '</div>')
+    }
+
+
+    /**
+     * Builds a table-log-line with the given message-obj
+     *
+     * @param message {object} emitted from the server. contains one log-entry
+     * @returns {string}
+     */
+    function getLogLine(message) {
+        return '<tr class="' + message.level + '"><td>' + message.level + '</td><td class="line-number">' + message.prefix + '</td><td>' + message.message + '</td></tr>';
+    }
+
 
 
     /**
@@ -246,12 +298,10 @@ define(function(require, exports, module) {
 
 
     function appendInlineWidget(hostEditor, pos) {
-        console.log('appendInlineWidget', Date(), 'before: ' + inlineEditors.length);
         var context = prepareEditorForProvider(hostEditor, pos),
             result;
 
         if (!context) {
-            console.log('appendInlineWidget', Date(), 'after: ' + inlineEditors.length);
             return null;
         } else {
             result = new $.Deferred();
@@ -263,11 +313,14 @@ define(function(require, exports, module) {
                 pos: pos
             });
             result.resolve(quickRequireEditor);
-            console.log('appendInlineWidget', Date(), 'after: ' + inlineEditors.length);
             return result.promise();
 
         }
     }
+
+
+
+    exports.completeLogger = completeLogger;
     exports.openSocketIoConnection = openSocketIoConnection;
     exports.openNpmInstallDialog = openNpmInstallDialog;
     exports.removeAndCloseByTimestamp = removeAndCloseByTimestamp;
