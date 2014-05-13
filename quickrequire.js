@@ -153,7 +153,6 @@ define(function(require, exports, module) {
     }
     var i = 0;
     function appendLogLine(message, warn) {
-        console.log(++i);
         if(!$npmLoggerContainer) {
             $npmLoggerContainer = $('.npm-logger-container');
         }
@@ -172,9 +171,14 @@ define(function(require, exports, module) {
     }
 
     function completeLogger(data) {
-        debugger;
         var $npmLogger = $('#npm-logger');
-        $npmLogger.append('<div class="finish">' + data + '</div>')
+        //dirty-fix
+        setTimeout(function() {
+            appendLogLine({level: 'success', message: data[data.length-1], prefix: 'done'});
+
+            //TODO
+            $npmLogger.append('<div class="finish">' + data + '</div>');
+        }, 1000);
     }
 
 

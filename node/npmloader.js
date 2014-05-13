@@ -24,7 +24,6 @@
         } catch (e) {
             console.log(e);
         }
-        var msgArray = [];
 
         var npmInstallDomain = domain.create();
         try {

@@ -205,3 +205,7 @@
 #npm-logger tr.error td {
     background: #e9322d;
 }
+#npm-logger tr.success td {
+    background: #5cb85c;
+    color:black;
+}
