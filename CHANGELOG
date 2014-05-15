@@ -1,3 +1,13 @@
+v0.5.0:
+  date: 2014-05-15
+  changes:
+    - add feature: now you can review the install log (comparable with the console log entries)
+
+v0.4.1:
+  date: 2014-05-12
+  changes:
+    - update dependencies
+
 v0.4.0:
   date: 2014-05-05
   changes:
