@@ -151,7 +151,6 @@ define(function(require, exports, module) {
 
         });
     }
-    var i = 0;
     function appendLogLine(message, warn) {
         if(!$npmLoggerContainer) {
             $npmLoggerContainer = $('.npm-logger-container');
@@ -171,14 +170,27 @@ define(function(require, exports, module) {
     }
 
     function completeLogger(data) {
-        var $npmLogger = $('#npm-logger');
-        //dirty-fix
-        setTimeout(function() {
-            appendLogLine({level: 'success', message: data[data.length-1], prefix: 'done'});
+        var summary = 'Installed dependencies: <br>';
+        // get the requested node_module
+        var lastEntry = data[data.length-1];
 
-            //TODO
-            $npmLogger.append('<div class="finish">' + data + '</div>');
-        }, 1000);
+        //build a list of the installed dependencies
+        _.each(data, function(dat) {
+            if(dat[0] !== lastEntry[0]) {
+                summary += dat[0] + '<br>';
+            }
+        });
+        // show summary
+        appendLogLine({level: 'summary', message: summary, prefix: ''});
+
+        // show success
+        appendLogLine({level: 'success', message: lastEntry[0] + ' ' + lastEntry[1], prefix: 'done'});
+
+        //reset the scrollheight to make sure that the next "autoscroll" starts at the right position
+        scrollheight = null;
+        //TODO
+        //$npmLogger.append('<div class="finish">' + data + '</div>');
+
     }
 
 
