@@ -209,3 +209,7 @@
     background: #5cb85c;
     color:black;
 }
+#npm-logger tr.summary td {
+    background: #d2ecd2;
+    color:black;
+}
