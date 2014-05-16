@@ -38,16 +38,20 @@ define(function (require, exports, module) {
      * @param {String} moduleName
      */
     function RequireEditor(opt) {
-        hideSaveFlag = opt.hideSaveFlag;
-        var $parent = opt.$parent, moduleName = opt.moduleName;
+        if(!opt)
+            throw new Error('Options are not defined!');
+        hideSaveFlag = opt.hideSaveFlag || false;
+        var $parent = opt.$parent
+        var moduleName = opt.moduleName;
+
         npmInstall = typeof  opt.npmInstall === 'function' ? opt.npmInstall : npmInstall;
         this.timestamp = new Date().getTime();
+        if (!$parent)
+            throw new Error('$parent is not defined');
         if(!parsedModuleList) {
             parsedModuleList = JSON.parse(moduleNameList);
         }
 
-        if (!$parent)
-            throw new Error('$parent is not defined');
         if (moduleName || moduleName === '') {
             var matches = this.filterModules(moduleName);
 
