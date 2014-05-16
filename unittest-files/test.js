@@ -1,1 +1,1 @@
-//Test file
+require("test")

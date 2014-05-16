@@ -50,7 +50,7 @@ define(function(require, exports, module) {
                         ExtensionLoader     = testWindow.brackets.test.ExtensionLoader;
 
                         extensionRequire = testWindow.brackets.getModule("utils/ExtensionLoader").getRequireContextForExtension("quick-require");
-
+                        debugger;
                         InlineRequireEditor = extensionRequire('inlinerequireeditor');
                         npmbridge = extensionRequire('npmbridge');
                         quickrequire = extensionRequire('quickrequire');
@@ -214,8 +214,7 @@ define(function(require, exports, module) {
                 expect(hostEdit).toBeTruthy();
 
                 expect(testInlineRequireEditor._checkValue).toEqual(jasmine.any(Function));
-
-                expect(testInlineRequireEditor._checkValue()).toBe(null);
+                expect(testInlineRequireEditor._checkValue()).toBe("test");
 
 
                 // Little workaround for requirejs.
@@ -252,16 +251,16 @@ define(function(require, exports, module) {
 
                 expect(function() {
                     new RequireEditor();
-                }).toThrow('$parent is not defined');
+                }).toThrow('Options are not defined!');
 
                 var parent = {};
                 expect(function() {
-                    new RequireEditor(parent);
+                    new RequireEditor({$parent: parent, hideSaveFlag: false});
                 }).toThrow('moduleName is not defined');
 
                 var moduleName = 'String';
                 expect(function() {
-                    new RequireEditor(null, moduleName);
+                    new RequireEditor({$parent: null, hideSaveFlag: false, moduleName : 'module Name'});
                 }).toThrow('$parent is not defined');
 
             });
@@ -269,9 +268,10 @@ define(function(require, exports, module) {
 
             var parent, re1 = null;
             beforeEach(function() {
-                parent = $('#editor-holder');
-
-                re1 = new RequireEditor(parent, 'module name');
+                parent = testWindow.window.document.getElementById('editor-holder');
+                parent = $(parent);
+                debugger;
+                re1 = new RequireEditor({$parent: parent, hideSaveFlag: false, moduleName : 'module Name'});
                 spyOn(re1, 'setListeners');
 
 
