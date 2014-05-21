@@ -2,7 +2,7 @@
 // https://github.com/mwaylabs/brackets-quick-require/blob/master/LICENCE
 
 define(function(require, exports, module) {
-//    "use strict";
+    "use strict";
 
     var CommandManager = brackets.getModule("command/CommandManager");
 
@@ -57,7 +57,7 @@ define(function(require, exports, module) {
      * @private
      */
     function _getPackageJson() {
-        packageJson = null;
+        var packageJson = null;
         var currentProjectRootAsset = sidebar.getCurrentProjectRootAsset();
 
         currentProjectRootAsset.subtree.each(function (asset) {
